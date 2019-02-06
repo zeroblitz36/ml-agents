@@ -4,7 +4,8 @@ import logging
 import tensorflow as tf
 import numpy as np
 
-from mlagents.envs import UnityException, AllBrainInfo
+from mlagents.envs import UnityException, AllBrainInfo, BrainInfo
+from mlagents.trainers import ActionInfo
 
 logger = logging.getLogger("mlagents.trainers")
 
@@ -17,7 +18,7 @@ class UnityTrainerException(UnityException):
 
 
 class Trainer(object):
-    """This class is the base class for the mlagents.trainers"""
+    """This class is the base class for the mlagents.envs.trainers"""
 
     def __init__(self, brain, trainer_parameters, training, run_id):
         """

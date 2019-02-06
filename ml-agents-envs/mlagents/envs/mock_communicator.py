@@ -1,5 +1,5 @@
-from mlagents_envs.communicator import Communicator
-from mlagents_envs.communicator_objects import UnityOutput, UnityInput, \
+from .communicator import Communicator
+from .communicator_objects import UnityOutput, UnityInput, \
     ResolutionProto, BrainParametersProto, UnityRLInitializationOutput, \
     AgentInfoProto, UnityRLOutput
 

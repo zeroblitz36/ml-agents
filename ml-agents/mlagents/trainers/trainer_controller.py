@@ -12,13 +12,13 @@ if sys.platform.startswith('win'):
     import win32con
 
 import yaml
-import re
 import numpy as np
 import tensorflow as tf
-from tensorflow.python.tools import freeze_graph
-from mlagents.envs.environment import UnityEnvironment
-from mlagents.envs.exception import UnityEnvironmentException
 
+from mlagents.envs import UnityEnvironment
+from mlagents.envs import AllBrainInfo, BrainInfo
+from mlagents.envs.exception import UnityEnvironmentException
+from mlagents.trainers import Trainer, Policy
 from mlagents.trainers.ppo.trainer import PPOTrainer
 from mlagents.trainers.bc.offline_trainer import OfflineBCTrainer
 from mlagents.trainers.bc.online_trainer import OnlineBCTrainer
@@ -96,7 +96,7 @@ class TrainerController(object):
             self.summaries_dir = '/{docker_target_name}/summaries'.format(
                 docker_target_name=docker_target_name)
 
-        self.logger = logging.getLogger('mlagents.envs')
+        self.logger = logging.getLogger('mlagents_envs.mlagents_envs')
         self.run_id = run_id
         self.save_freq = save_freq
         self.lesson = lesson
