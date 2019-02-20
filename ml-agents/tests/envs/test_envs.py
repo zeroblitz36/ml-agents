@@ -1,12 +1,12 @@
 import unittest.mock as mock
 import pytest
-import struct
 
 import numpy as np
 
 from mlagents.envs import UnityEnvironment, UnityEnvironmentException, UnityActionException, \
     BrainInfo
 from tests.mock_communicator import MockCommunicator
+
 
 @mock.patch('mlagents.envs.UnityEnvironment.get_communicator')
 def test_handles_bad_filename(get_communicator):
@@ -41,9 +41,9 @@ def test_reset(mock_communicator, mock_launcher):
     assert isinstance(brain_info['RealFakeBrain'].visual_observations, list)
     assert isinstance(brain_info['RealFakeBrain'].vector_observations, np.ndarray)
     assert len(brain_info['RealFakeBrain'].visual_observations) == brain.number_visual_observations
-    assert brain_info['RealFakeBrain'].vector_observations.shape[0] == \
+    assert len(brain_info['RealFakeBrain'].vector_observations) == \
            len(brain_info['RealFakeBrain'].agents)
-    assert brain_info['RealFakeBrain'].vector_observations.shape[1] == \
+    assert len(brain_info['RealFakeBrain'].vector_observations[0]) == \
            brain.vector_observation_space_size * brain.num_stacked_vector_observations
 
 
@@ -68,9 +68,9 @@ def test_step(mock_communicator, mock_launcher):
     assert isinstance(brain_info['RealFakeBrain'].visual_observations, list)
     assert isinstance(brain_info['RealFakeBrain'].vector_observations, np.ndarray)
     assert len(brain_info['RealFakeBrain'].visual_observations) == brain.number_visual_observations
-    assert brain_info['RealFakeBrain'].vector_observations.shape[0] == \
+    assert len(brain_info['RealFakeBrain'].vector_observations) == \
            len(brain_info['RealFakeBrain'].agents)
-    assert brain_info['RealFakeBrain'].vector_observations.shape[1] == \
+    assert len(brain_info['RealFakeBrain'].vector_observations[0]) == \
            brain.vector_observation_space_size * brain.num_stacked_vector_observations
 
     print("\n\n\n\n\n\n\n" + str(brain_info['RealFakeBrain'].local_done))
