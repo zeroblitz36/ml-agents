@@ -1,6 +1,6 @@
 <img src="docs/images/unity-wide.png" align="middle" width="3000"/>
 
-<img src="docs/images/image-banner.png" align="middle" width="3000"/>
+<img src="docs/images/image-banner.png" align="middle" width="3000"/> 
 
 # Unity ML-Agents Toolkit (Beta)
 [![docs badge](https://img.shields.io/badge/docs-reference-blue.svg)](docs/Readme.md)
