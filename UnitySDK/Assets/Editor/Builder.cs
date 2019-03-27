@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace MLAgents.CloudBuild
+namespace MLAgents
 {
     public class Builder
     {
