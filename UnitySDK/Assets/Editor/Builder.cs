@@ -11,7 +11,18 @@ namespace MLAgents
     {
         public static void PreExport()
         {
-
+            var aca = SceneAsset.FindObjectOfType<Academy>();
+		
+			var learningBrains = aca.broadcastHub.broadcastingBrains.Where(
+				x => x != null && x is LearningBrain);
+			
+			foreach (Brain brain in learningBrains)
+			{
+				if (!aca.broadcastHub.IsControlled(brain))
+				{
+					aca.broadcastHub._brainsToControl.Add(brain);
+				}
+			}
         }
     }
 }
