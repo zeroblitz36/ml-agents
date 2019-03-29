@@ -1,5 +1,6 @@
 ﻿#if UNITY_CLOUD_BUILD
 
+using System;
 using System.Linq;
 using MLAgents;
 using UnityEditor;
@@ -10,20 +11,11 @@ namespace MLAgents
 {
 	public class Builder
 	{
-		public static void PreExport()
+		public static void PreExport(UnityEngine.CloudBuild.BuildManifestObject manifest)
 		{
-			EditorSceneManager.OpenScene("Assets/ML-Agents/Examples/3DBall/Scenes/3DBall.unity");
+			var envPath = Environment.GetEnvironmentVariable("ENV_PATH");
+			EditorSceneManager.OpenScene(envPath);
 			var aca = SceneAsset.FindObjectOfType<Academy>();
-
-			if (aca == null)
-			{
-				Debug.Log("Academy is null");
-			}
-
-			if (aca.broadcastHub == null)
-			{
-				Debug.Log("broadcastHub is null");
-			}
 	
 			var learningBrains = aca.broadcastHub.broadcastingBrains.Where(
 				x => x != null && x is LearningBrain);
