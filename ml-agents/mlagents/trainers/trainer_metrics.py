@@ -4,6 +4,9 @@ import csv
 from time import time
 
 LOGGER = logging.getLogger("mlagents.trainers")
+FIELD_NAMES = ['Brain name', 'Time to update policy',
+               'Time since start of training', 'Time for last experience collection',
+               'Number of experiences used for training', 'Mean return']
 
 class TrainerMetrics:
     """
@@ -18,9 +21,6 @@ class TrainerMetrics:
         """
         self.path = path
         self.brain_name = brain_name
-        self.FIELD_NAMES = ['Brain name', 'Time to update policy',
-                            'Time since start of training', 'Time for last experience collection',
-                            'Number of experiences used for training', 'Mean return']
         self.rows = []
         self.time_start_experience_collection = None
         self.time_training_start = time()
@@ -41,11 +41,22 @@ class TrainerMetrics:
         """
         Inform Metrics class that experience collection is done.
         """
-        if self.start_experience_collection_timer:
-            self.delta_last_experience_collection = time() - self.time_start_experience_collection
-        else:
-            self.delta_last_experience_collection = 0.0
+        if self.time_start_experience_collection:
+            curr_delta = time() - self.time_start_experience_collection
+            if self.delta_last_experience_collection is None:
+                self.delta_last_experience_collection = curr_delta
+            else:
+                self.delta_last_experience_collection += curr_delta
         self.time_start_experience_collection = None
+
+    def add_delta_step(self, delta: float):
+        """
+        Inform Metrics class about time to step in environment.
+        """
+        if self.delta_last_experience_collection:
+            self.delta_last_experience_collection +=  delta
+        else:
+            self.delta_last_experience_collection = delta
 
     def start_policy_update_timer(self, number_experiences: int, mean_return: float):
         """
@@ -63,6 +74,7 @@ class TrainerMetrics:
                    for c in [self.delta_policy_update, delta_train_start,
                              self.delta_last_experience_collection,
                              self.last_buffer_length, self.last_mean_return])
+        self.delta_last_experience_collection = None
         self.rows.append(row)
 
 
@@ -93,6 +105,6 @@ class TrainerMetrics:
         """
         with open(self.path, 'w') as f:
             writer = csv.writer(f)
-            writer.writerow(self.FIELD_NAMES)
+            writer.writerow(FIELD_NAMES)
             for row in self.rows:
                 writer.writerow(row)
