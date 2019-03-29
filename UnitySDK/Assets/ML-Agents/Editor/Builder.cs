@@ -1,4 +1,4 @@
-﻿#if UNITY_CLOUD_BUILD
+﻿//#if UNITY_CLOUD_BUILD
 
 using System.Linq;
 using MLAgents;
@@ -12,7 +12,18 @@ namespace MLAgents
 	{
 		public static void PreExport()
 		{
+			EditorSceneManager.LoadScene(0);
 			var aca = SceneAsset.FindObjectOfType<Academy>();
+
+			if (aca == null)
+			{
+				Debug.Log("Academy is null");
+			}
+
+			if (aca.broadcastHub == null)
+			{
+				Debug.Log("broadcastHub is null");
+			}
 	
 			var learningBrains = aca.broadcastHub.broadcastingBrains.Where(
 				x => x != null && x is LearningBrain);
@@ -28,4 +39,4 @@ namespace MLAgents
 	}
 }
 
-#endif
+//#endif
