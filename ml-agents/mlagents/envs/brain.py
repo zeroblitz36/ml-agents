@@ -46,7 +46,7 @@ class BrainInfo:
             self.previous_text_actions, other.previous_text_actions
         )
         self.action_masks = safe_concat_np_ndarray(self.action_masks, other.action_masks)
-        self.custom_observations.extend(other.custom_observations)
+        self.custom_observations = safe_concat_lists(self.custom_observations, other.custom_observations)
 
     @staticmethod
     def merge_memories(m1, m2):
