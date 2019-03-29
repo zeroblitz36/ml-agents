@@ -12,7 +12,7 @@ namespace MLAgents
 	{
 		public static void PreExport()
 		{
-			EditorSceneManager.LoadScene(0);
+			EditorSceneManager.OpenScene("3DBall");
 			var aca = SceneAsset.FindObjectOfType<Academy>();
 
 			if (aca == null)
