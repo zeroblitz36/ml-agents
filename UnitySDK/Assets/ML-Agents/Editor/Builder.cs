@@ -1,4 +1,4 @@
-﻿//#if UNITY_CLOUD_BUILD
+﻿#if UNITY_CLOUD_BUILD
 
 using System.Linq;
 using MLAgents;
@@ -39,4 +39,4 @@ namespace MLAgents
 	}
 }
 
-//#endif
+#endif
