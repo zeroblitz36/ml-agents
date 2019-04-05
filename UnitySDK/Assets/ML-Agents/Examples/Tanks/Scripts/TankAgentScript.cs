@@ -34,7 +34,7 @@ public class TankAgentScript : Agent
         m_CurrentHealth = m_StartingHealth;
     }
 
-    protected bool isDead() {
+    public bool IsDead() {
         return m_CurrentHealth <= 0;
     }
 
@@ -55,6 +55,39 @@ public class TankAgentScript : Agent
         else
         {
             AddVectorObs(0);
+        }
+    }
+
+    private float m_TimeOfLastShot = 0;
+    public float m_TimeBetweenShots = 0.5f;
+    public Rigidbody m_Shell;
+    public Transform m_FireTransform;
+    public float m_ShellSpeed = 20;
+    public override void AgentAction(float[] vectorAction, string textAction)
+    {
+        float forwardMovement = vectorAction[0];
+        float turnValue = vectorAction[1];
+        bool tryingToShoot = vectorAction[2] > 0.5f;
+        if(forwardMovement < 0)
+        {
+            turnValue *= -1;
+        }
+        forwardMovement = Mathf.Clamp(forwardMovement, -1, 1);
+        turnValue = Mathf.Clamp(turnValue, -1, 1);
+
+        Vector3 movement = transform.forward * forwardMovement * m_Speed * Time.deltaTime;
+        rBody.MovePosition(rBody.position + movement);
+
+        float turn = turnValue * m_TurnSpeed * Time.deltaTime;
+        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+        rBody.MoveRotation(rBody.rotation * turnRotation);
+
+        if(tryingToShoot && Time.time > m_TimeOfLastShot + m_TimeBetweenShots)
+        {
+            m_TimeOfLastShot = Time.time;
+            //BANG BANG
+            Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+            shellInstance.velocity = m_ShellSpeed * m_FireTransform.forward;
         }
     }
 }

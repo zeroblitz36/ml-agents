@@ -788,8 +788,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676735436}
-  m_LocalRotation: {x: 0.0871554, y: -0, z: -0, w: -0.9961947}
-  m_LocalPosition: {x: 0, y: 1.7, z: 1.35}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 1.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1081838798}
@@ -871,7 +871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &787789713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,23 +1076,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5600fe180dbf9284f9bcab5bbff90333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 0}
+  brain: {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}
   agentParameters:
     agentCameras: []
     maxStep: 0
     resetOnDone: 1
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 1
+    numberOfActionsBetweenDecisions: 10
   m_TankNumber: 1
   m_Speed: 12
   m_TurnSpeed: 180
   m_StartingHealth: 100
-  m_Slider: {fileID: 0}
-  m_FillImage: {fileID: 0}
+  m_Slider: {fileID: 413714312}
+  m_FillImage: {fileID: 1611389186}
   m_FullHealthColor: {r: 0, g: 1, b: 0, a: 1}
   m_ZeroHealthColor: {r: 1, g: 0, b: 0, a: 1}
-  m_ExplosionPrefab: {fileID: 0}
+  m_ExplosionPrefab: {fileID: 151086, guid: 6bc6d0dd8b8428e4ca316513f2cf13c6, type: 3}
   m_SpawnPoint: {x: 0, y: 0, z: 0}
+  m_TimeBetweenShots: 0.5
+  m_Shell: {fileID: 0}
+  m_FireTransform: {fileID: 0}
+  m_ShellSpeed: 20
 --- !u!1 &1223472495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   broadcastHub:
-    broadcastingBrains: []
+    broadcastingBrains:
+    - {fileID: 11400000, guid: 26bf58213f5628c4bab7f2ac7e9dda9a, type: 2}
+    - {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}
     _brainsToControl: []
   maxSteps: 0
   trainingConfiguration:
@@ -1743,7 +1749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1781028511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1856,7 +1862,8 @@ MonoBehaviour:
   m_DampTime: 0.2
   m_ScreenEdgeBuffer: 4
   m_MinSize: 6.5
-  m_Targets: []
+  m_Targets:
+  - {fileID: 1081838798}
 --- !u!4 &2043530569
 Transform:
   m_ObjectHideFlags: 0
