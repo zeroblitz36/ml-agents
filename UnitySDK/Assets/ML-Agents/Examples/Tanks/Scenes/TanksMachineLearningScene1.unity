@@ -297,7 +297,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint2
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -327,7 +327,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint1
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_NumRoundsToWin: 5
   m_StartDelay: 3
   m_EndDelay: 3
-  m_CameraControl: {fileID: 2043530568}
+  m_CameraControl: {fileID: 0}
   m_MessageText: {fileID: 127688236}
   m_TankPrefab: {fileID: 173472, guid: 756d3a6506f2f8241b4e8badde68567a, type: 3}
   m_Tanks:
@@ -547,7 +547,7 @@ MonoBehaviour:
     type: 3}
   m_PlayerBrain: {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}
   m_LearningBrain: {fileID: 11400000, guid: 26bf58213f5628c4bab7f2ac7e9dda9a, type: 2}
-  m_CameraControl: {fileID: 0}
+  m_CameraControl: {fileID: 2043530568}
 --- !u!4 &1227793300
 Transform:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2043530567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e26b621854da943aeca10c9a73880c, type: 3}
+  m_Script: {fileID: 11500000, guid: c54e3c1f18f8cbb49b10f5e2dc8a1865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_DampTime: 0.2

@@ -671,7 +671,7 @@ MonoBehaviour:
     maxStep: 0
     resetOnDone: 0
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 10
+    numberOfActionsBetweenDecisions: 1
   m_TankNumber: 1
   m_Speed: 12
   m_TurnSpeed: 180

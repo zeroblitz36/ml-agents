@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using MLAgents;
+using System;
 
 public class TankAgentScript : Agent
 {
@@ -16,6 +17,7 @@ public class TankAgentScript : Agent
     public Color m_FullHealthColor = Color.green;
     public Color m_ZeroHealthColor = Color.red;
     public GameObject m_ExplosionPrefab;
+    private ParticleSystem m_ExplosionParticles;
 
     public Vector3 m_SpawnPoint;
 
@@ -25,6 +27,13 @@ public class TankAgentScript : Agent
         rBody = GetComponent<Rigidbody>();
     }
 
+    public override void InitializeAgent()
+    {
+        rBody = GetComponent<Rigidbody>();
+        m_ExplosionParticles = Instantiate(m_ExplosionPrefab.GetComponent<ParticleSystem>());
+        m_ExplosionParticles.gameObject.SetActive(false);
+    }
+
     public override void AgentReset()
     {
         rBody.angularVelocity = Vector3.zero;
@@ -32,6 +41,50 @@ public class TankAgentScript : Agent
         this.transform.position = m_SpawnPoint;
 
         m_CurrentHealth = m_StartingHealth;
+
+        SetHealthUI();
+    }
+
+    private void SetHealthUI()
+    {
+        // Set the slider's value appropriately.
+        m_Slider.value = m_CurrentHealth;
+
+        // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
+        m_FillImage.color = Color.Lerp(m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if(amount < 0)
+        {
+            Debug.LogError("TakeDamage must not receive a negative value");
+            return;
+        }
+        if(IsDead())
+        {
+            //nothing to do , the tank is already dead
+            return;
+        }
+        float previousHealth = m_CurrentHealth;
+        m_CurrentHealth -= amount;
+        m_CurrentHealth = Mathf.Max(0, m_CurrentHealth);
+
+        AddReward((m_CurrentHealth - previousHealth) / m_StartingHealth);
+
+        SetHealthUI();
+        if(previousHealth > 0 && m_CurrentHealth <= 0)
+        {
+            OnDeath();
+        }
+    }
+
+    private void OnDeath()
+    {
+        m_ExplosionParticles.transform.position = transform.position;
+        m_ExplosionParticles.gameObject.SetActive(true);
+        
+        m_ExplosionParticles.Play();
     }
 
     public bool IsDead() {
