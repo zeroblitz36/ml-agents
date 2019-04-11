@@ -541,7 +541,7 @@ MonoBehaviour:
   m_SpawnPoints:
   - {fileID: 783069025}
   - {fileID: 681674084}
-  m_NumberOfAgents: 1
+  m_NumberOfAgents: 2
   m_isPlayerPresent: 1
   m_TankAgentPrefab: {fileID: 569009397727213909, guid: 3c598027605ef264f8ff9c0b6bca38cf,
     type: 3}

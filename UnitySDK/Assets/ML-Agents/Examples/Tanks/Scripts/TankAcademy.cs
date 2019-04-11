@@ -43,7 +43,8 @@ public class TankAcademy : Academy
 
         for(int i = 1; i < m_NumberOfAgents; i++)
         {
-            m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_LearningBrain, m_SpawnPoints[i].position, Quaternion.identity);
+            //m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_LearningBrain, m_SpawnPoints[i].position, Quaternion.identity);
+            m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_PlayerBrain, m_SpawnPoints[i].position, Quaternion.identity);
         }
 
         Transform[] agentTransforms = new Transform[m_NumberOfAgents];
@@ -51,6 +52,7 @@ public class TankAcademy : Academy
         for(int i = 0; i < m_NumberOfAgents; i++)
         {
             agentTransforms[i] = m_Agents[i].transform;
+            m_Agents[i].GetComponent<TankAgentScript>().m_TankNumber = i;
         }
 
         m_CameraControl.m_Targets = agentTransforms;
