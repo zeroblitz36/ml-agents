@@ -118,6 +118,10 @@ public class TankAgentScript : Agent
     public float m_ShellSpeed = 20;
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        if (IsDead())
+        {
+            return;
+        }
         float forwardMovement = vectorAction[0];
         float turnValue = vectorAction[1];
         bool tryingToShoot = vectorAction[2] > 0.5f;
