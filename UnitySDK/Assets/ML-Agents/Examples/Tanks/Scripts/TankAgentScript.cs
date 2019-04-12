@@ -7,7 +7,7 @@ using System;
 
 public class TankAgentScript : Agent
 {
-    public int m_TankNumber = 1;
+    public int m_TankId = 0;
     public float m_Speed = 12f;
     public float m_TurnSpeed = 180f;
     public float m_StartingHealth = 100f;
@@ -85,6 +85,8 @@ public class TankAgentScript : Agent
         m_ExplosionParticles.gameObject.SetActive(true);
         
         m_ExplosionParticles.Play();
+        
+        Done();
     }
 
     public bool IsDead() {
