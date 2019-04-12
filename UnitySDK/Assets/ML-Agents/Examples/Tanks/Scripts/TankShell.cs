@@ -21,7 +21,10 @@ public class TankShell : MonoBehaviour
     {
         foreach (TankShell shell in s_TankShellList)
         {
-            Destroy(shell.gameObject);
+            if(shell != null)
+            {
+                Destroy(shell.gameObject);
+            }
         }
         s_TankShellList.Clear();
     }
