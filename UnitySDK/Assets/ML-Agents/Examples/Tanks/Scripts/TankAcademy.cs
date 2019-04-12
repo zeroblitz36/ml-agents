@@ -83,6 +83,8 @@ public class TankAcademy : Academy
             m_CameraControl.m_Targets[i] = m_Agents[i].transform;
             m_Agents[i].GetComponent<TankAgentScript>().m_TankId = i;
         }
+
+        TankShell.DestroyAllShells();
     }
 
     private GameObject CreateTankAgent(GameObject tankAgentPrefab, Brain brain, Vector3 position, Quaternion orientation)

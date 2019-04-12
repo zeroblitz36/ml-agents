@@ -8,10 +8,22 @@ public class TankShell : MonoBehaviour
     public float m_ExplosionForce = 1000f;
     public float m_MaxLifeTime = 2f;
     public float m_ExplosionRadius = 5f;
+
+    private static List<TankShell> s_TankShellList = new List<TankShell>();
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, m_MaxLifeTime);
+        s_TankShellList.Add(this);
+    }
+
+    public static void DestroyAllShells()
+    {
+        foreach (TankShell shell in s_TankShellList)
+        {
+            Destroy(shell.gameObject);
+        }
+        s_TankShellList.Clear();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,6 +44,7 @@ public class TankShell : MonoBehaviour
         }
 
         Destroy(gameObject);
+        s_TankShellList.Remove(this);
     }
 
     // Update is called once per frame
