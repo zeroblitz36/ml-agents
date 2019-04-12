@@ -63,6 +63,8 @@ public class TankAcademy : Academy
         GameObject agentObj = Instantiate(tankAgentPrefab, position, orientation);
         Agent agent = agentObj.GetComponent<Agent>();
         agent.GiveBrain(brain);
+        TankAgentScript tankAgentScript = agentObj.GetComponent<TankAgentScript>();
+        tankAgentScript.m_SpawnPoint = position;
         agent.AgentReset();
         return agentObj;
     }
