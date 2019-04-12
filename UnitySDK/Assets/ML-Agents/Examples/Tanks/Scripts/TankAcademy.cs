@@ -84,7 +84,7 @@ public class TankAcademy : Academy
             m_Agents[i].GetComponent<TankAgentScript>().m_TankId = i;
         }
 
-        TankShell.DestroyAllShells();
+        TankShell.DisableAllShells();
     }
 
     private GameObject CreateTankAgent(GameObject tankAgentPrefab, Brain brain, Vector3 position, Quaternion orientation)
