@@ -473,7 +473,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1382778433}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &912599393
+--- !u!114 &912599394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -630,6 +630,7 @@ MonoBehaviour:
   m_PlayerBrain: {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}
   m_LearningBrain: {fileID: 11400000, guid: 26bf58213f5628c4bab7f2ac7e9dda9a, type: 2}
   m_CameraControl: {fileID: 2043530568}
+  m_mainCamera: {fileID: 950458852}
 --- !u!4 &1227793300
 Transform:
   m_ObjectHideFlags: 0
