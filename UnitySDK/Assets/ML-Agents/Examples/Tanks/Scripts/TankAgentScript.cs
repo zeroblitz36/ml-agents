@@ -115,7 +115,7 @@ public class TankAgentScript : Agent
             AddVectorObs(0);
         }
 
-        if (m_TankId == 0 && Input.GetMouseButtonDown(0))
+        if (/*m_TankId == 0 &&*/ Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
