@@ -13,6 +13,7 @@ public class TankAcademy : Academy
     public Brain m_LearningBrain;
 
     public CameraControl m_CameraControl;
+    public Camera m_mainCamera;
     protected GameObject[] m_Agents;
 
     public override void InitializeAcademy()
@@ -82,6 +83,7 @@ public class TankAcademy : Academy
         {
             m_CameraControl.m_Targets[i] = m_Agents[i].transform;
             m_Agents[i].GetComponent<TankAgentScript>().m_TankId = i;
+            m_Agents[i].GetComponent<TankAgentScript>().cam = m_mainCamera;
         }
 
         TankShell.DisableAllShells();

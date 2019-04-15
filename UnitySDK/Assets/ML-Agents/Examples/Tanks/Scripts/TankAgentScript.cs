@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MLAgents;
 using System;
+using UnityEngine.AI;
 
 public class TankAgentScript : Agent
 {
@@ -18,13 +19,15 @@ public class TankAgentScript : Agent
     public Color m_ZeroHealthColor = Color.red;
     public GameObject m_ExplosionPrefab;
     private ParticleSystem m_ExplosionParticles;
-
+    public Camera cam;
+    private NavMeshAgent navMeshAgent;
     public Vector3 m_SpawnPoint;
 
     private Rigidbody rBody;
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     public override void InitializeAgent()
@@ -110,6 +113,16 @@ public class TankAgentScript : Agent
         else
         {
             AddVectorObs(0);
+        }
+
+        if (m_TankId == 0 && Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit))
+            {
+                navMeshAgent.SetDestination(hit.point);
+            }
         }
     }
 

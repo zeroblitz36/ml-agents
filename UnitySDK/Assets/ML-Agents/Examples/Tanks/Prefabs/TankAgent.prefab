@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 569009397727213907}
   - component: {fileID: 569009397727213906}
   - component: {fileID: 569009397727213905}
+  - component: {fileID: 4347591884900744850}
   m_Layer: 14
   m_Name: TankAgent
   m_TagString: Untagged
@@ -672,7 +673,7 @@ MonoBehaviour:
     resetOnDone: 0
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
-  m_TankNumber: 1
+  m_TankId: 0
   m_Speed: 12
   m_TurnSpeed: 180
   m_StartingHealth: 100
@@ -686,6 +687,28 @@ MonoBehaviour:
   m_Shell: {fileID: 2822653659182217517, guid: 910b7d91a9c312a4088c9e5ce0b16589, type: 3}
   m_FireTransform: {fileID: 569009397323144275}
   m_ShellSpeed: 20
+--- !u!195 &4347591884900744850
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569009397727213909}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 1
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.7
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &569009397870919921
 GameObject:
   m_ObjectHideFlags: 0
