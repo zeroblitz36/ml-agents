@@ -27,6 +27,8 @@ public class TankAgentScript : Agent
 
     public Vector3 m_SpawnPoint;
 
+    private TankAgentScript[] enemyTankAgents;
+
     private Rigidbody rBody;
     void Start()
     {
@@ -138,6 +140,29 @@ public class TankAgentScript : Agent
             //navMeshAgent.isStopped = true;
             navMeshAgent.ResetPath();
             isDestinationSet = false;
+        }
+
+        for(int i = 0; i < enemyTankAgents.Length; i++)
+        {
+            TankAgentScript enemyTankAgent = enemyTankAgents[0];
+            GameObject enemyGameObject = enemyTankAgent.gameObject;
+
+            //Agent position and rotation
+            AddVectorObs(enemyGameObject.transform.position.x);
+            //The Y position can be ignored, the Tank never flies
+            AddVectorObs(enemyGameObject.transform.position.z);
+            //The Tank can only rotate around the y axis
+            AddVectorObs(enemyGameObject.transform.rotation.y);
+
+            //How much health it has
+            if (enemyTankAgent.m_CurrentHealth > 0)
+            {
+                AddVectorObs(enemyTankAgent.m_CurrentHealth / enemyTankAgent.m_StartingHealth);
+            }
+            else
+            {
+                AddVectorObs(0);
+            }
         }
     }
 
