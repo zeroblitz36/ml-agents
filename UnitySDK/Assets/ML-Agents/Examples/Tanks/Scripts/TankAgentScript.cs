@@ -21,6 +21,10 @@ public class TankAgentScript : Agent
     private ParticleSystem m_ExplosionParticles;
     public Camera cam;
     private NavMeshAgent navMeshAgent;
+    private Vector3 navDestination;
+    public GameObject directionSphere;
+    private bool isDestinationSet = false;
+
     public Vector3 m_SpawnPoint;
 
     private Rigidbody rBody;
@@ -28,6 +32,7 @@ public class TankAgentScript : Agent
     {
         rBody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        //navMeshAgent.updatePosition = false;
     }
 
     public override void InitializeAgent()
@@ -121,8 +126,17 @@ public class TankAgentScript : Agent
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
             {
-                navMeshAgent.SetDestination(hit.point);
+                navDestination = hit.point;
+                //navMeshAgent.isStopped = false;
+                isDestinationSet = true;
+                navMeshAgent.SetDestination(navDestination);
             }
+        }
+        else if (isDestinationSet && navMeshAgent.remainingDistance < 2)
+        {
+            //navMeshAgent.isStopped = true;
+            navMeshAgent.ResetPath();
+            isDestinationSet = false;
         }
     }
 
@@ -160,6 +174,20 @@ public class TankAgentScript : Agent
             //BANG BANG
             Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
             shellInstance.velocity = m_ShellSpeed * m_FireTransform.forward;
+        }
+
+        //Vector3 nextPos = navMeshAgent.nextPosition;
+        //Debug.Log("tank #" + m_TankId + " nextPos = " + nextPos);
+        if (isDestinationSet && navMeshAgent.path.corners.Length>1)
+        {
+            directionSphere.SetActive(true);
+            Vector3 v = navMeshAgent.path.corners[1] - transform.position;
+            v = v.normalized * 3;
+            directionSphere.transform.position = v + transform.position;
+        }
+        else
+        {
+            directionSphere.SetActive(false);
         }
     }
 }
