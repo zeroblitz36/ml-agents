@@ -141,7 +141,10 @@ public class TankAgentScript : Agent
             navMeshAgent.ResetPath();
             isDestinationSet = false;
         }
-
+        if(enemyTankAgents == null)
+        {
+            return;
+        }
         for(int i = 0; i < enemyTankAgents.Length; i++)
         {
             TankAgentScript enemyTankAgent = enemyTankAgents[0];
