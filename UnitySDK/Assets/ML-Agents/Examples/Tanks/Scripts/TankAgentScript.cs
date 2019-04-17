@@ -32,7 +32,8 @@ public class TankAgentScript : Agent
     {
         rBody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        //navMeshAgent.updatePosition = false;
+        navMeshAgent.updatePosition = false;
+        navMeshAgent.updateRotation = false;
     }
 
     public override void InitializeAgent()
@@ -151,6 +152,35 @@ public class TankAgentScript : Agent
         {
             return;
         }
+
+        //Vector3 nextPos = navMeshAgent.nextPosition;
+        //Debug.Log("tank #" + m_TankId + " nextPos = " + nextPos);
+        if (isDestinationSet && navMeshAgent.path.corners.Length > 1)
+        {
+            directionSphere.SetActive(true);
+            Vector3 v = navMeshAgent.path.corners[1] - transform.position;
+            v = v.normalized * 3;
+            directionSphere.transform.position = v + transform.position;
+
+            float signedAngle = Vector3.SignedAngle(transform.forward, v, transform.up);
+            float aux = m_TurnSpeed * Time.deltaTime;
+            float aux2 = Mathf.Clamp(signedAngle / aux, -1, 1);
+            if(Mathf.Abs(aux2) < 0.1f)
+            {
+                aux2 = 0;
+            }
+            vectorAction[1] = aux2;
+
+            if(Mathf.Abs(signedAngle) < 10)
+            {
+                vectorAction[0] = 1;
+            }
+        }
+        else
+        {
+            directionSphere.SetActive(false);
+        }
+
         float forwardMovement = vectorAction[0];
         float turnValue = vectorAction[1];
         bool tryingToShoot = vectorAction[2] > 0.5f;
@@ -174,20 +204,6 @@ public class TankAgentScript : Agent
             //BANG BANG
             Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
             shellInstance.velocity = m_ShellSpeed * m_FireTransform.forward;
-        }
-
-        //Vector3 nextPos = navMeshAgent.nextPosition;
-        //Debug.Log("tank #" + m_TankId + " nextPos = " + nextPos);
-        if (isDestinationSet && navMeshAgent.path.corners.Length>1)
-        {
-            directionSphere.SetActive(true);
-            Vector3 v = navMeshAgent.path.corners[1] - transform.position;
-            v = v.normalized * 3;
-            directionSphere.transform.position = v + transform.position;
-        }
-        else
-        {
-            directionSphere.SetActive(false);
         }
     }
 }
