@@ -29,17 +29,16 @@ public class TankAgentScript : Agent
     public TankAgentScript[] enemyTankAgents;
 
     private Rigidbody rBody;
-    void Start()
+    private RayPerception rayPer = null;
+
+    public override void InitializeAgent()
     {
+        base.InitializeAgent();
         rBody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.updatePosition = false;
         navMeshAgent.updateRotation = false;
-    }
-
-    public override void InitializeAgent()
-    {
-        rBody = GetComponent<Rigidbody>();
+        rayPer = GetComponent<RayPerception>();
     }
 
     public override void AgentReset()
@@ -114,6 +113,15 @@ public class TankAgentScript : Agent
         {
             AddVectorObs(0);
         }
+
+        float rayDistance = 50f;
+        float[] rayAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
+        string[] detectableObjects = { "tank", "stage" };
+        //if(rayPer == null)
+        //{
+        //    rayPer = gameObject.AddComponent(typeof(RayPerception)) as RayPerception;
+        //}
+        AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 1.5f, 1.5f));
         /*
         if (Input.GetMouseButtonDown(0))
         {
@@ -134,7 +142,7 @@ public class TankAgentScript : Agent
             isDestinationSet = false;
         }
         */
-        if(enemyTankAgents == null)
+        if (enemyTankAgents == null)
         {
             return;
         }
