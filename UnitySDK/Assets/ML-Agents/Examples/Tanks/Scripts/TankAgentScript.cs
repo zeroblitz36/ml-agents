@@ -230,8 +230,12 @@ public class TankAgentScript : Agent
         {
             m_TimeOfLastShot = Time.time;
             //BANG BANG
-            Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-            shellInstance.velocity = m_ShellSpeed * m_FireTransform.forward;
+            //Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+            //shellInstance.velocity = m_ShellSpeed * m_FireTransform.forward;
+            TankShell.FireShell(m_Shell, 
+                m_FireTransform.position, 
+                m_FireTransform.rotation,
+                m_ShellSpeed * m_FireTransform.forward);
         }
     }
 }
