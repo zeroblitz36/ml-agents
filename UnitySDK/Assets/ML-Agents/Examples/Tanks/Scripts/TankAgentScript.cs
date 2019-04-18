@@ -27,7 +27,7 @@ public class TankAgentScript : Agent
 
     public Vector3 m_SpawnPoint;
 
-    private TankAgentScript[] enemyTankAgents;
+    public TankAgentScript[] enemyTankAgents;
 
     private Rigidbody rBody;
     void Start()
@@ -122,8 +122,8 @@ public class TankAgentScript : Agent
         {
             AddVectorObs(0);
         }
-
-        if (/*m_TankId == 0 &&*/ Input.GetMouseButtonDown(0))
+        /*
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -141,6 +141,7 @@ public class TankAgentScript : Agent
             navMeshAgent.ResetPath();
             isDestinationSet = false;
         }
+        */
         if(enemyTankAgents == null)
         {
             return;
@@ -180,7 +181,7 @@ public class TankAgentScript : Agent
         {
             return;
         }
-
+        /*
         //Vector3 nextPos = navMeshAgent.nextPosition;
         //Debug.Log("tank #" + m_TankId + " nextPos = " + nextPos);
         if (isDestinationSet && navMeshAgent.path.corners.Length > 1)
@@ -208,6 +209,7 @@ public class TankAgentScript : Agent
         {
             directionSphere.SetActive(false);
         }
+        */
 
         float forwardMovement = vectorAction[0];
         float turnValue = vectorAction[1];

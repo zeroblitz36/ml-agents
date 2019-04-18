@@ -82,8 +82,18 @@ public class TankAcademy : Academy
         for (int i = 0; i < m_NumberOfAgents; i++)
         {
             m_CameraControl.m_Targets[i] = m_Agents[i].transform;
-            m_Agents[i].GetComponent<TankAgentScript>().m_TankId = i;
-            m_Agents[i].GetComponent<TankAgentScript>().cam = m_mainCamera;
+            TankAgentScript currentTankAgent = m_Agents[i].GetComponent<TankAgentScript>();
+            currentTankAgent.m_TankId = i;
+            currentTankAgent.cam = m_mainCamera;
+            currentTankAgent.enemyTankAgents = new TankAgentScript[m_NumberOfAgents - 1];
+            int k = 0;
+            for (int j = 0; j < m_NumberOfAgents; j++)
+            {
+                if (i == j) continue;
+                TankAgentScript otherTankAgent = m_Agents[j].GetComponent<TankAgentScript>();
+                currentTankAgent.enemyTankAgents[k] = otherTankAgent;
+                ++k;
+            }
         }
 
         TankShell.DisableAllShells();
