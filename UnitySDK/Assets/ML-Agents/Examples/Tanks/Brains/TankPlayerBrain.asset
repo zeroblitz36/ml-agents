@@ -19,8 +19,8 @@ MonoBehaviour:
     cameraResolutions: []
     vectorActionDescriptions:
     - Forwards and backwards movement
-    - Forwards and backwards movement
-    - Forwards and backwards movement
+    - Left and right directions
+    - Fire action
     vectorActionSpaceType: 1
   keyContinuousPlayerActions:
   - key: 119

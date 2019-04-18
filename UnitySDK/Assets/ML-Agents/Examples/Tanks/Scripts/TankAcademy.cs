@@ -41,6 +41,15 @@ public class TankAcademy : Academy
         }
         if(aliveCount <= 1)
         {
+            for (int i = 0; i < m_Agents.Length; i++)
+            {
+                TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
+                if (!t.IsDead())
+                {
+                    t.AddReward(1);
+                    break;
+                }
+            }
             Done();
         }
     }
@@ -75,8 +84,8 @@ public class TankAcademy : Academy
 
         for (int i = 1; i < m_NumberOfAgents; i++)
         {
-            //m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_LearningBrain, m_SpawnPoints[i].position, Quaternion.identity);
-            m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_PlayerBrain, m_SpawnPoints[i].position, Quaternion.identity);
+            m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_LearningBrain, m_SpawnPoints[i].position, Quaternion.identity);
+            //m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_PlayerBrain, m_SpawnPoints[i].position, Quaternion.identity);
         }
 
         for (int i = 0; i < m_NumberOfAgents; i++)
