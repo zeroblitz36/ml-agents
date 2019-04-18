@@ -18,7 +18,6 @@ public class TankAgentScript : Agent
     public Color m_FullHealthColor = Color.green;
     public Color m_ZeroHealthColor = Color.red;
     public GameObject m_ExplosionPrefab;
-    private ParticleSystem m_ExplosionParticles;
     public Camera cam;
     private NavMeshAgent navMeshAgent;
     private Vector3 navDestination;
@@ -41,8 +40,6 @@ public class TankAgentScript : Agent
     public override void InitializeAgent()
     {
         rBody = GetComponent<Rigidbody>();
-        m_ExplosionParticles = Instantiate(m_ExplosionPrefab.GetComponent<ParticleSystem>());
-        m_ExplosionParticles.gameObject.SetActive(false);
     }
 
     public override void AgentReset()
@@ -92,11 +89,6 @@ public class TankAgentScript : Agent
 
     private void OnDeath()
     {
-        m_ExplosionParticles.transform.position = transform.position;
-        m_ExplosionParticles.gameObject.SetActive(true);
-        
-        m_ExplosionParticles.Play();
-        
         Done();
     }
 
