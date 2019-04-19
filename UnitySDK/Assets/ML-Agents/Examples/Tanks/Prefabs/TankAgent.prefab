@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 6624980805238312356}
   m_Layer: 14
   m_Name: TankAgent
-  m_TagString: Untagged
+  m_TagString: tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -677,7 +677,7 @@ MonoBehaviour:
     maxStep: 0
     resetOnDone: 0
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 1
+    numberOfActionsBetweenDecisions: 5
   m_TankId: 0
   m_Speed: 12
   m_TurnSpeed: 180
@@ -1120,7 +1120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4474665413259328660
 Transform:
   m_ObjectHideFlags: 0

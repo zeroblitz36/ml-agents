@@ -20,6 +20,8 @@ public class TankAcademy : Academy
     {
         m_Agents = new GameObject[m_NumberOfAgents];
         m_CameraControl.m_Targets = new Transform[m_NumberOfAgents];
+        Monitor.SetActive(true);
+        //Monitor.Log()
     }
 
 

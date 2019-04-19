@@ -59,6 +59,7 @@ public class TankAgentScript : Agent
 
         // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
         m_FillImage.color = Color.Lerp(m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
+        Monitor.Log("health", m_CurrentHealth/m_StartingHealth, transform);
     }
 
     public void TakeDamage(float amount)
@@ -121,7 +122,18 @@ public class TankAgentScript : Agent
         //{
         //    rayPer = gameObject.AddComponent(typeof(RayPerception)) as RayPerception;
         //}
-        AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 1.5f, 1.5f));
+        
+        List<float> rayList = rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 1.5f, 1.5f);
+        /*
+        float[] logRayListInfo = rayList.ToArray();
+        for(int i = 0; i < logRayListInfo.Length; i++)
+        {
+            logRayListInfo[i] /= rayDistance;
+        }
+        */
+        Monitor.Log("rays",rayList.ToArray(), transform,Monitor.DisplayType.INDEPENDENT);
+        AddVectorObs(rayList);
+        
         /*
         if (Input.GetMouseButtonDown(0))
         {
