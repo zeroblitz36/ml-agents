@@ -536,7 +536,8 @@ MonoBehaviour:
     broadcastingBrains:
     - {fileID: 11400000, guid: 26bf58213f5628c4bab7f2ac7e9dda9a, type: 2}
     - {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}
-    _brainsToControl: []
+    _brainsToControl:
+    - {fileID: 11400000, guid: 26bf58213f5628c4bab7f2ac7e9dda9a, type: 2}
   maxSteps: 0
   trainingConfiguration:
     width: 80
@@ -556,7 +557,7 @@ MonoBehaviour:
   - {fileID: 783069025}
   - {fileID: 681674084}
   m_NumberOfAgents: 2
-  m_isPlayerPresent: 1
+  m_isPlayerPresent: 0
   m_TankAgentPrefab: {fileID: 569009397727213909, guid: 3c598027605ef264f8ff9c0b6bca38cf,
     type: 3}
   m_PlayerBrain: {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}

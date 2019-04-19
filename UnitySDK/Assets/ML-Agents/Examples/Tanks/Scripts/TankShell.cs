@@ -73,7 +73,7 @@ public class TankShell : MonoBehaviour
             TankAgentScript tankAgent = targetRigidBody.GetComponent<TankAgentScript>();
             if (!tankAgent)
                 continue;
-            float damage = 50;//CalculateDamage(targetRigidbody.position)
+            float damage = 10;//CalculateDamage(targetRigidbody.position)
 
             tankAgent.TakeDamage(damage);
         }

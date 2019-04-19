@@ -30,6 +30,7 @@ public class TankAgentScript : Agent
 
     private Rigidbody rBody;
     private RayPerception rayPer = null;
+    public TankAcademy tankAcademy;
 
     public override void InitializeAgent()
     {
@@ -78,8 +79,8 @@ public class TankAgentScript : Agent
         m_CurrentHealth -= amount;
         m_CurrentHealth = Mathf.Max(0, m_CurrentHealth);
 
-        AddReward((m_CurrentHealth - previousHealth) / m_StartingHealth);
-
+        //AddReward((m_CurrentHealth - previousHealth) / m_StartingHealth);
+        tankAcademy.EventTankTookDamage(m_TankId, amount, m_StartingHealth);
         SetHealthUI();
         if(previousHealth > 0 && m_CurrentHealth <= 0)
         {

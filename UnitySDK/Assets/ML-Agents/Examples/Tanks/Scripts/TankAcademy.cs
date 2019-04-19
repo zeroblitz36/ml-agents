@@ -48,11 +48,25 @@ public class TankAcademy : Academy
                 TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
                 if (!t.IsDead())
                 {
-                    t.AddReward(1);
+                    t.AddReward(10);
                     break;
                 }
             }
             Done();
+        }
+    }
+
+    public void EventTankTookDamage(int tankId, float damage, float startingHealth)
+    {
+        for(int i = 0; i < m_Agents.Length; i++)
+        {
+            TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
+            float reward = damage / startingHealth;
+            if (t.m_TankId == tankId)
+            {
+                reward *= -1;
+            }
+            t.AddReward(reward);
         }
     }
 
@@ -96,7 +110,9 @@ public class TankAcademy : Academy
             TankAgentScript currentTankAgent = m_Agents[i].GetComponent<TankAgentScript>();
             currentTankAgent.m_TankId = i;
             currentTankAgent.cam = m_mainCamera;
+            currentTankAgent.tankAcademy = this;
             currentTankAgent.enemyTankAgents = new TankAgentScript[m_NumberOfAgents - 1];
+
             int k = 0;
             for (int j = 0; j < m_NumberOfAgents; j++)
             {
