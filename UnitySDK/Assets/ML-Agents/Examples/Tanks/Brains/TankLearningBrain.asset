@@ -22,5 +22,5 @@ MonoBehaviour:
     - Left and right directions
     - Fire action
     vectorActionSpaceType: 1
-  model: {fileID: 6713611170231022170, guid: b76d8b7e66c443444b351f48266e9a59, type: 3}
+  model: {fileID: -5319507875268946739, guid: ee7b297c6bbe402459688627dca657e5, type: 3}
   inferenceDevice: 0
