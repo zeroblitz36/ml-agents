@@ -116,6 +116,10 @@ public class TankAgentScript : Agent
             AddVectorObs(0);
         }
 
+        //Add velocity
+        AddVectorObs(rBody.velocity.x);
+        AddVectorObs(rBody.velocity.z);
+
         float rayDistance = 10f;
         float[] rayAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
         //string[] detectableObjects = { "tank", "stage" };
@@ -188,6 +192,10 @@ public class TankAgentScript : Agent
             AddVectorObs(relativeVector.z);
             //Where is the enemy pointing at ?
             AddVectorObs(enemyGameObject.transform.rotation.y);
+            //Add velocity
+            AddVectorObs(enemyTankAgent.rBody.velocity.x);
+            AddVectorObs(enemyTankAgent.rBody.velocity.z);
+
             //Are you looking at the enemy ?
             float signedAngle = Vector3.SignedAngle(transform.forward, relativeVector, transform.up);
             signedAngle /= 180;

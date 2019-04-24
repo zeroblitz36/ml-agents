@@ -2,7 +2,7 @@
 mlagents-learn config/online_bc_config.yaml --train --slow
 
 //Reinforcement learning
-mlagents-learn config/trainer_config.yaml --run-id=cob_1 --train
+mlagents-learn config/trainer_config.yaml --run-id=test_1 --train
 
 
 //If the Python script complains about different API versions, you need to update the ml-agents script by going to
