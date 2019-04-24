@@ -257,9 +257,9 @@ public class TankAgentScript : Agent
         forwardMovement = Mathf.Clamp(forwardMovement, -1, 1);
         turnValue = Mathf.Clamp(turnValue, -1, 1);
 
-        Vector3 movement = transform.forward * forwardMovement * m_Speed * Time.deltaTime;
-        rBody.MovePosition(rBody.position + movement);
-
+        //Vector3 movement = transform.forward * forwardMovement * m_Speed * Time.deltaTime;
+        //rBody.MovePosition(rBody.position + movement);
+        rBody.AddForce(transform.forward * forwardMovement * m_Speed, ForceMode.VelocityChange);
         float turn = turnValue * m_TurnSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         rBody.MoveRotation(rBody.rotation * turnRotation);

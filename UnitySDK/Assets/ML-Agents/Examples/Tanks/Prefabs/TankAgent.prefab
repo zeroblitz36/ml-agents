@@ -638,8 +638,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569009397727213909}
   serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 2
+  m_Mass: 3
+  m_Drag: 3
   m_AngularDrag: 2
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -679,7 +679,7 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
   m_TankId: 0
-  m_Speed: 12
+  m_Speed: 1
   m_TurnSpeed: 180
   m_StartingHealth: 100
   m_Slider: {fileID: 569009396524315158}
@@ -691,6 +691,7 @@ MonoBehaviour:
   directionSphere: {fileID: 2444280380757003081}
   m_SpawnPoint: {x: 0, y: 0, z: 0}
   enemyTankAgents: []
+  tankAcademy: {fileID: 0}
   m_TimeBetweenShots: 0.5
   m_Shell: {fileID: 2822653659182217517, guid: 910b7d91a9c312a4088c9e5ce0b16589, type: 3}
   m_FireTransform: {fileID: 569009397323144275}
