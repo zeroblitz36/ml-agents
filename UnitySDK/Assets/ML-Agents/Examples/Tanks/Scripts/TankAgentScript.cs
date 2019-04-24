@@ -116,15 +116,15 @@ public class TankAgentScript : Agent
             AddVectorObs(0);
         }
 
-        float rayDistance = 50f;
+        float rayDistance = 10f;
         float[] rayAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
-        string[] detectableObjects = { "tank", "stage" };
+        //string[] detectableObjects = { "tank", "stage" };
         //if(rayPer == null)
         //{
         //    rayPer = gameObject.AddComponent(typeof(RayPerception)) as RayPerception;
         //}
         
-        List<float> rayList = rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 1.5f, 1.5f);
+        List<float> rayList = rayPer.Perceive(rayDistance, rayAngles,new string[]{ "tank", "stage" }, 1.5f, 1.5f);
         /*
         float[] logRayListInfo = rayList.ToArray();
         for(int i = 0; i < logRayListInfo.Length; i++)
@@ -132,9 +132,20 @@ public class TankAgentScript : Agent
             logRayListInfo[i] /= rayDistance;
         }
         */
-        Monitor.Log("rays",rayList.ToArray(), transform,Monitor.DisplayType.INDEPENDENT);
+        Monitor.Log("rayList", rayList.ToArray(), transform,Monitor.DisplayType.INDEPENDENT);
         AddVectorObs(rayList);
-        
+
+        /*
+        if (m_TankId == 0)
+        {
+            String rayString = "";
+            foreach (float x in enemyTankRayList)
+            {
+                rayString += x + " ";
+            }
+            Debug.Log("rays size = "+ enemyTankRayList.Count +" content = '" + rayString + "'");
+        }
+        */
         /*
         if (Input.GetMouseButtonDown(0))
         {
@@ -163,13 +174,25 @@ public class TankAgentScript : Agent
         {
             TankAgentScript enemyTankAgent = enemyTankAgents[0];
             GameObject enemyGameObject = enemyTankAgent.gameObject;
-
+            /*
             //Agent position and rotation
             AddVectorObs(enemyGameObject.transform.position.x);
             //The Y position can be ignored, the Tank never flies
             AddVectorObs(enemyGameObject.transform.position.z);
             //The Tank can only rotate around the y axis
             AddVectorObs(enemyGameObject.transform.rotation.y);
+            */
+            Vector3 relativeVector = enemyGameObject.transform.position - transform.position;
+            //Relative enemy position
+            AddVectorObs(relativeVector.x);
+            AddVectorObs(relativeVector.z);
+            //Where is the enemy pointing at ?
+            AddVectorObs(enemyGameObject.transform.rotation.y);
+            //Are you looking at the enemy ?
+            float signedAngle = Vector3.SignedAngle(transform.forward, relativeVector, transform.up);
+            signedAngle /= 180;
+            AddVectorObs(signedAngle);
+            Monitor.Log("angleToEnemy_"+enemyTankAgent.m_TankId, signedAngle, transform);
 
             //How much health it has
             if (enemyTankAgent.m_CurrentHealth > 0)
