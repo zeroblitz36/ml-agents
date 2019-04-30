@@ -20,18 +20,24 @@ public class TankAcademy : Academy
     {
         m_Agents = new GameObject[m_NumberOfAgents];
         m_CameraControl.m_Targets = new Transform[m_NumberOfAgents];
+        startedStageCooldown = false;
         Monitor.SetActive(true);
         //Monitor.Log()
     }
 
-
     public override void AcademyStep()
     {
-        if(m_Agents.Length <= 1)
+        if (startedStageCooldown && Time.time - timeWhenLastTankAlive > 1)
         {
-            //somebody intentionally wanted only one tank agent, so skip the rest of the logic
-            return;
+            Done();
+            startedStageCooldown = false;
         }
+    }
+
+    private bool startedStageCooldown = false;
+    private float timeWhenLastTankAlive;
+    public void EventTankDied(int tankId)
+    {
         int aliveCount = 0;
         for (int i = 0; i < m_Agents.Length; i++)
         {
@@ -41,7 +47,14 @@ public class TankAcademy : Academy
                 aliveCount++;
             }
         }
-        if(aliveCount <= 1)
+        if(aliveCount <= 0)
+        {
+            //all tanks have died
+            Done();
+            startedStageCooldown = false;
+            return;
+        }
+        if (aliveCount <= 1)
         {
             for (int i = 0; i < m_Agents.Length; i++)
             {
@@ -52,7 +65,14 @@ public class TankAcademy : Academy
                     break;
                 }
             }
-            Done();
+            //Done();
+            if (!startedStageCooldown)
+            {
+                startedStageCooldown = true;
+                timeWhenLastTankAlive = Time.time;
+                //Debug.Log("timeWhenLastTankAlive = " + timeWhenLastTankAlive);
+            }
+            return;
         }
     }
 

@@ -91,6 +91,7 @@ public class TankAgentScript : Agent
     private void OnDeath()
     {
         Done();
+        tankAcademy.EventTankDied(m_TankId);
     }
 
     public bool IsDead() {
