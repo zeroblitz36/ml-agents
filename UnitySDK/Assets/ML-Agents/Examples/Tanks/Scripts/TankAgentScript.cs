@@ -63,7 +63,7 @@ public class TankAgentScript : Agent
         Monitor.Log("health", m_CurrentHealth/m_StartingHealth, transform);
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, int bulletTankId)
     {
         if(amount < 0)
         {
@@ -80,7 +80,7 @@ public class TankAgentScript : Agent
         m_CurrentHealth = Mathf.Max(0, m_CurrentHealth);
 
         //AddReward((m_CurrentHealth - previousHealth) / m_StartingHealth);
-        tankAcademy.EventTankTookDamage(m_TankId, amount, m_StartingHealth);
+        tankAcademy.EventTankTookDamage(m_TankId, bulletTankId, amount, m_StartingHealth);
         SetHealthUI();
         if(previousHealth > 0 && m_CurrentHealth <= 0)
         {
@@ -282,7 +282,8 @@ public class TankAgentScript : Agent
             TankShell.FireShell(m_Shell, 
                 m_FireTransform.position, 
                 m_FireTransform.rotation,
-                m_ShellSpeed * m_FireTransform.forward);
+                m_ShellSpeed * m_FireTransform.forward,
+                m_TankId);
         }
     }
 }

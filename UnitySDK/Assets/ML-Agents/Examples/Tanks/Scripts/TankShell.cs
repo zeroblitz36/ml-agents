@@ -9,6 +9,7 @@ public class TankShell : MonoBehaviour
     public float m_MaxLifeTime = 2f;
     private float creationTime;
     public float m_ExplosionRadius = 5f;
+    public int m_TankIdOwner;
 
     private static Stack<TankShell> s_DisabledShellList = new Stack<TankShell>();
     private static List<TankShell> s_EnabledShellList = new List<TankShell>(); 
@@ -25,7 +26,7 @@ public class TankShell : MonoBehaviour
         s_DisabledShellList.Push(this);
     }
 
-    public static void FireShell(Rigidbody m_ShellPrefab, Vector3 position, Quaternion rotation, Vector3 velocity)
+    public static void FireShell(Rigidbody m_ShellPrefab, Vector3 position, Quaternion rotation, Vector3 velocity, int tankId)
     {
         if(s_DisabledShellList.Count > 0)
         {
@@ -34,13 +35,14 @@ public class TankShell : MonoBehaviour
             s.transform.rotation = rotation;
             s.GetComponent<Rigidbody>().velocity = velocity;
             s.gameObject.SetActive(true);
+            s.m_TankIdOwner = tankId;
         }
         else
         {
             Rigidbody shellInstance = Instantiate(m_ShellPrefab, position, rotation) as Rigidbody;
             shellInstance.velocity = velocity;
+            shellInstance.GetComponent<TankShell>().m_TankIdOwner = tankId;
         }
-
     }
 
     public static void DisableAllShells()
@@ -75,7 +77,7 @@ public class TankShell : MonoBehaviour
                 continue;
             float damage = 10;//CalculateDamage(targetRigidbody.position)
 
-            tankAgent.TakeDamage(damage);
+            tankAgent.TakeDamage(damage, m_TankIdOwner);
         }
 
         //Destroy(gameObject);

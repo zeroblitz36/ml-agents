@@ -76,7 +76,7 @@ public class TankAcademy : Academy
         }
     }
 
-    public void EventTankTookDamage(int tankId, float damage, float startingHealth)
+    public void EventTankTookDamage(int tankId, int bulletTankId, float damage, float startingHealth)
     {
         for(int i = 0; i < m_Agents.Length; i++)
         {
@@ -85,6 +85,10 @@ public class TankAcademy : Academy
             if (t.m_TankId == tankId)
             {
                 reward *= -1;
+            }
+            if(t.m_TankId == bulletTankId)
+            {
+                reward *= 2;
             }
             t.AddReward(reward);
         }
