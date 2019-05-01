@@ -12,7 +12,7 @@ public class TankAgentScript : Agent
     public float m_Speed = 12f;
     public float m_TurnSpeed = 180f;
     public float m_StartingHealth = 100f;
-    private float m_CurrentHealth;
+    public float m_CurrentHealth;
     public Slider m_Slider;
     public Image m_FillImage;
     public Color m_FullHealthColor = Color.green;
@@ -100,6 +100,7 @@ public class TankAgentScript : Agent
 
     public override void CollectObservations()
     {
+        //Debug.Log("tank " + m_TankId + " reward = " + GetCumulativeReward());
         //Agent position and rotation
         AddVectorObs(this.transform.position.x);
         //The Y position can be ignored, the Tank never flies
@@ -137,8 +138,8 @@ public class TankAgentScript : Agent
             logRayListInfo[i] /= rayDistance;
         }
         */
-        Monitor.Log("rayList", rayList.ToArray(), transform,Monitor.DisplayType.INDEPENDENT);
-        AddVectorObs(rayList);
+        //Monitor.Log("rayList", rayList.ToArray(), transform,Monitor.DisplayType.INDEPENDENT);
+        //AddVectorObs(rayList);
 
         /*
         if (m_TankId == 0)
@@ -199,9 +200,9 @@ public class TankAgentScript : Agent
 
             //Are you looking at the enemy ?
             float signedAngle = Vector3.SignedAngle(transform.forward, relativeVector, transform.up);
-            signedAngle /= 180;
+            //signedAngle /= 180;
             AddVectorObs(signedAngle);
-            Monitor.Log("angleToEnemy_"+enemyTankAgent.m_TankId, signedAngle, transform);
+            Monitor.Log("angleToEnemy_"+enemyTankAgent.m_TankId, signedAngle/180, transform);
 
             //How much health it has
             if (enemyTankAgent.m_CurrentHealth > 0)

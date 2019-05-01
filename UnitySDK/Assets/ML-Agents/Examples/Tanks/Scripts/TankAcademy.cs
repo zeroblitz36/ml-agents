@@ -15,12 +15,12 @@ public class TankAcademy : Academy
     public CameraControl m_CameraControl;
     public Camera m_mainCamera;
     protected GameObject[] m_Agents;
+    private float timeOfEpisodeStart;
 
     public override void InitializeAcademy()
     {
         m_Agents = new GameObject[m_NumberOfAgents];
         m_CameraControl.m_Targets = new Transform[m_NumberOfAgents];
-        startedStageCooldown = false;
         Monitor.SetActive(true);
         //Monitor.Log()
     }
@@ -30,7 +30,33 @@ public class TankAcademy : Academy
         if (startedStageCooldown && Time.time - timeWhenLastTankAlive > 1)
         {
             Done();
-            startedStageCooldown = false;
+            return;
+        }
+        if(!startedStageCooldown && Time.time - timeOfEpisodeStart > 120)
+        {
+            int bestTankId = 0;
+            for (int i = 1; i < m_Agents.Length; i++)
+            {
+                TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
+                TankAgentScript bestTank = m_Agents[bestTankId].GetComponent<TankAgentScript>();
+                if (t.m_CurrentHealth > bestTank.m_CurrentHealth)
+                {
+                    bestTankId = t.m_TankId;
+                }
+            }
+            for(int i = 0; i < m_Agents.Length; i++)
+            {
+                TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
+                if(t.m_TankId == bestTankId)
+                {
+                    //t.AddReward(10);
+                }
+                t.Done();
+            }
+            startedStageCooldown = true;
+            timeWhenLastTankAlive = Time.time;
+            //Done();
+            //return;
         }
     }
 
@@ -51,7 +77,6 @@ public class TankAcademy : Academy
         {
             //all tanks have died
             Done();
-            startedStageCooldown = false;
             return;
         }
         if (aliveCount <= 1)
@@ -61,8 +86,9 @@ public class TankAcademy : Academy
                 TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
                 if (!t.IsDead())
                 {
-                    t.AddReward(10);
-                    break;
+                    //t.AddReward(10);
+                    //t.Done();
+                    //break;
                 }
             }
             //Done();
@@ -82,6 +108,14 @@ public class TankAcademy : Academy
         {
             TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
             float reward = damage / startingHealth;
+            if(tankId == t.m_TankId)
+            {
+                //t.AddReward(-reward);
+            }else if(bulletTankId == t.m_TankId)
+            {
+                t.AddReward(reward);
+            }
+            /*
             if (t.m_TankId == tankId)
             {
                 reward *= -1;
@@ -91,6 +125,7 @@ public class TankAcademy : Academy
                 reward *= 2;
             }
             t.AddReward(reward);
+            */
         }
     }
 
@@ -148,6 +183,9 @@ public class TankAcademy : Academy
         }
 
         TankShell.DisableAllShells();
+
+        startedStageCooldown = false;
+        timeOfEpisodeStart = Time.time;
     }
 
     private GameObject CreateTankAgent(GameObject tankAgentPrefab, Brain brain, Vector3 position, Quaternion orientation)
