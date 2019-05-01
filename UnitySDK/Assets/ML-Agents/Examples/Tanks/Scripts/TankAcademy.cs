@@ -11,7 +11,7 @@ public class TankAcademy : Academy
     public GameObject m_TankAgentPrefab;
     public Brain m_PlayerBrain;
     public Brain m_LearningBrain;
-
+    public GameObject m_goalSphere;
     public CameraControl m_CameraControl;
     public Camera m_mainCamera;
     protected GameObject[] m_Agents;
@@ -20,7 +20,7 @@ public class TankAcademy : Academy
     public override void InitializeAcademy()
     {
         m_Agents = new GameObject[m_NumberOfAgents];
-        m_CameraControl.m_Targets = new Transform[m_NumberOfAgents];
+        m_CameraControl.m_Targets = new Transform[m_NumberOfAgents + 1];
         Monitor.SetActive(true);
         //Monitor.Log()
     }
@@ -181,6 +181,8 @@ public class TankAcademy : Academy
                 ++k;
             }
         }
+
+        m_CameraControl.m_Targets[m_NumberOfAgents] = m_goalSphere.transform;
 
         TankShell.DisableAllShells();
 
