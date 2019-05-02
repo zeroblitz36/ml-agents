@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TankLearningBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 12
+    vectorObservationSize: 64
     numStackedVectorObservations: 1
     vectorActionSize: 03000000
     cameraResolutions: []
@@ -22,5 +22,5 @@ MonoBehaviour:
     - Left and right directions
     - Fire action
     vectorActionSpaceType: 1
-  model: {fileID: -6239511983677201843, guid: 135fbda8477321048a2bcbf38085e415, type: 3}
+  model: {fileID: -5991677688670841528, guid: 0d737e5744d47a643b23b0e960fc2aea, type: 3}
   inferenceDevice: 0

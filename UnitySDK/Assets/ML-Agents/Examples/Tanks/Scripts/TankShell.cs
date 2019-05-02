@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TankShell : MonoBehaviour
@@ -47,50 +46,19 @@ public class TankShell : MonoBehaviour
 
     public static void DisableAllShells()
     {
-        /*
-        foreach (TankShell shell in s_EnabledShellList)
-        {
-            if(shell != null)
-            {
-                Destroy(shell.gameObject);
-            }
-        }
-        */
         while(s_EnabledShellList.Count > 0)
         {
             s_EnabledShellList[0].gameObject.SetActive(false);
         }
-        //s_DisabledShellList.Clear();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        /*
-        Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankAgentMask);
-
-        for(int i = 0; i < colliders.Length; i++)
-        {
-            Rigidbody targetRigidBody = colliders[i].GetComponent<Rigidbody>();
-            if (!targetRigidBody)
-                continue;
-            targetRigidBody.AddExplosionForce(m_ExplosionForce, transform.position, m_ExplosionRadius);
-            TankAgentScript tankAgent = targetRigidBody.GetComponent<TankAgentScript>();
-            if (!tankAgent)
-                continue;
-            float damage = 10;//CalculateDamage(targetRigidbody.position)
-
-            tankAgent.TakeDamage(damage, m_TankIdOwner);
-        }
-        */
         if(other.tag == "goal")
         {
             TankAcademy academy = GameObject.Find("Academy").GetComponent<TankAcademy>();
             academy.EventGoalSphereHitByBullet(m_TankIdOwner);
         }
-
-
-        //Destroy(gameObject);
-        //s_DisabledShellList.Remove(this);
         gameObject.SetActive(false);
     }
 

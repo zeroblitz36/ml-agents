@@ -21,85 +21,11 @@ public class TankAcademy : Academy
         m_Agents = new GameObject[m_NumberOfAgents];
         m_CameraControl.m_Targets = new Transform[m_NumberOfAgents + 1];
         Monitor.SetActive(true);
-        //Monitor.Log()
     }
 
     public override void AcademyStep()
     {
-        if (startedStageCooldown && Time.time - timeWhenLastTankAlive > 3)
-        {
-            Done();
-            return;
-        }
-        if(!startedStageCooldown && Time.time - timeOfEpisodeStart > 120)
-        {
-            int bestTankId = 0;
-            for (int i = 1; i < m_Agents.Length; i++)
-            {
-                TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
-                TankAgentScript bestTank = m_Agents[bestTankId].GetComponent<TankAgentScript>();
-                if (t.m_CurrentHealth > bestTank.m_CurrentHealth)
-                {
-                    bestTankId = t.m_TankId;
-                }
-            }
-            for(int i = 0; i < m_Agents.Length; i++)
-            {
-                TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
-                if(t.m_TankId == bestTankId)
-                {
-                    //t.AddReward(10);
-                }
-                Debug.Log("Tank" + t.m_TankId + " reward = " + t.GetCumulativeReward());
-                t.Done();
-            }
-            startedStageCooldown = true;
-            timeWhenLastTankAlive = Time.time;
-            //Done();
-            //return;
-        }
-    }
-
-    private bool startedStageCooldown = false;
-    private float timeWhenLastTankAlive;
-    public void EventTankDied(int tankId)
-    {
-        int aliveCount = 0;
-        for (int i = 0; i < m_Agents.Length; i++)
-        {
-            TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
-            if (!t.IsDead())
-            {
-                aliveCount++;
-            }
-        }
-        if(aliveCount <= 0)
-        {
-            //all tanks have died
-            Done();
-            return;
-        }
-        if (aliveCount <= 1)
-        {
-            for (int i = 0; i < m_Agents.Length; i++)
-            {
-                TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
-                if (!t.IsDead())
-                {
-                    //t.AddReward(10);
-                    //t.Done();
-                    //break;
-                }
-            }
-            //Done();
-            if (!startedStageCooldown)
-            {
-                startedStageCooldown = true;
-                timeWhenLastTankAlive = Time.time;
-                //Debug.Log("timeWhenLastTankAlive = " + timeWhenLastTankAlive);
-            }
-            return;
-        }
+        
     }
 
     internal void EventGoalSphereHitByBullet(int bulletTankId)
@@ -111,7 +37,6 @@ public class TankAcademy : Academy
             TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
             if (bulletTankId == t.m_TankId)
             {
-                //t.AddReward(1);
                 t.HitPoint();
             }
         }
@@ -123,9 +48,23 @@ public class TankAcademy : Academy
         Vector3 newPos = new Vector3(Random.Range(-d, d), 1.5f, Random.Range(-d, d));
         m_goalSphere.transform.position = newPos;
         Vector2 v = Random.insideUnitCircle.normalized * 10;
-        //Vector3 newVel = new Vector3(v.x, 0, v.y);
         Vector3 newVel = new Vector3(0, 0, 0);
         m_goalSphere.GetComponent<Rigidbody>().velocity = newVel;
+
+        TankAgentScript t = m_Agents[0].GetComponent<TankAgentScript>();
+        Vector3 relativeVector = m_goalSphere.transform.position - t.transform.position;
+        float signedAngle = GetSignedAngleBetweenTankAndGoalSphere(t.transform);
+        Rigidbody rBody = t.GetComponent<Rigidbody>();
+        rBody.rotation *= Quaternion.Euler(0, -signedAngle, 0);
+    }
+
+    public float GetSignedAngleBetweenTankAndGoalSphere(Transform t)
+    {
+        Vector3 relativeVector = m_goalSphere.transform.position - t.position;
+        relativeVector.y = 0;
+        Vector3 forwardTank = t.forward;
+        forwardTank.y = 0;
+        return Vector3.SignedAngle(relativeVector, forwardTank, Vector3.up);
     }
 
     List<float> goalSphereObservationList = new List<float>();
@@ -136,40 +75,20 @@ public class TankAcademy : Academy
         goalSphereObservationList.Add(relativeVector.x);
         goalSphereObservationList.Add(relativeVector.z);
         goalSphereObservationList.Add(Vector3.Distance(m_goalSphere.transform.position, t.position));
-        float signedAngle = Vector3.SignedAngle(transform.forward, relativeVector, transform.up);
+        relativeVector.y = 0;
+        Vector3 forwardTank = t.forward;
+        forwardTank.y = 0;
+        float signedAngle = GetSignedAngleBetweenTankAndGoalSphere(t);
         goalSphereObservationList.Add(signedAngle);
-        Rigidbody r = m_goalSphere.GetComponent<Rigidbody>();
-        goalSphereObservationList.Add(r.velocity.x);
-        goalSphereObservationList.Add(r.velocity.z);
+
         return goalSphereObservationList;
     }
-
-    public void EventTankTookDamage(int tankId, int bulletTankId, float damage, float startingHealth)
+    
+    public float GetDistanceToGoalSphere(Vector3 pos)
     {
-        for(int i = 0; i < m_Agents.Length; i++)
-        {
-            TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
-            float reward = damage / startingHealth;
-            if(tankId == t.m_TankId)
-            {
-                //t.AddReward(-reward);
-            }else if(bulletTankId == t.m_TankId)
-            {
-                t.AddReward(reward);
-            }
-            /*
-            if (t.m_TankId == tankId)
-            {
-                reward *= -1;
-            }
-            if(t.m_TankId == bulletTankId)
-            {
-                reward *= 2;
-            }
-            t.AddReward(reward);
-            */
-        }
+        return Vector3.Distance(m_goalSphere.transform.position, pos);
     }
+    
 
     public override void AcademyReset()
     {
@@ -204,7 +123,6 @@ public class TankAcademy : Academy
         for (int i = 1; i < m_NumberOfAgents; i++)
         {
             m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_LearningBrain, m_SpawnPoints[i].position, Quaternion.identity);
-            //m_Agents[i] = CreateTankAgent(m_TankAgentPrefab, m_PlayerBrain, m_SpawnPoints[i].position, Quaternion.identity);
         }
 
         for (int i = 0; i < m_NumberOfAgents; i++)
@@ -231,9 +149,6 @@ public class TankAcademy : Academy
         TankShell.DisableAllShells();
 
         ResetGoalSphere();
-
-        startedStageCooldown = false;
-        timeOfEpisodeStart = Time.time;
     }
 
     private GameObject CreateTankAgent(GameObject tankAgentPrefab, Brain brain, Vector3 position, Quaternion orientation)

@@ -28,6 +28,9 @@ TagManager:
   - stone
   - tank
   - stage
+  - red
+  - green
+  - blue
   layers:
   - Default
   - TransparentFX
