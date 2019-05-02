@@ -65,7 +65,9 @@ public class TankShell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        /*
         Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankAgentMask);
+
         for(int i = 0; i < colliders.Length; i++)
         {
             Rigidbody targetRigidBody = colliders[i].GetComponent<Rigidbody>();
@@ -79,6 +81,13 @@ public class TankShell : MonoBehaviour
 
             tankAgent.TakeDamage(damage, m_TankIdOwner);
         }
+        */
+        if(other.tag == "goal")
+        {
+            TankAcademy academy = GameObject.Find("Academy").GetComponent<TankAcademy>();
+            academy.EventGoalSphereHitByBullet(m_TankIdOwner);
+        }
+
 
         //Destroy(gameObject);
         //s_DisabledShellList.Remove(this);

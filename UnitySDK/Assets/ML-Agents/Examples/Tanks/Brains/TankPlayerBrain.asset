@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TankPlayerBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 6
+    vectorObservationSize: 11
     numStackedVectorObservations: 1
     vectorActionSize: 03000000
     cameraResolutions: []

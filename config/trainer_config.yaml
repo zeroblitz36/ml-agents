@@ -267,7 +267,10 @@ TankLearningBrain:
     batch_size: 2024
     buffer_size: 20240
     gamma: 0.995
-    max_steps: 1e6
+    learning_rate: 3.0e-5
+    beta: 1.0e-2
+    max_steps: 1e7
     summary_freq: 3000
     num_layers: 3
     hidden_units: 512
+    epsilon: 0.1

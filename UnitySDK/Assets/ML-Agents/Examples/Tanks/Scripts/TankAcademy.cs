@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using MLAgents;
 using System.Collections.Generic;
 using UnityEngine;
-using MLAgents;
 
 public class TankAcademy : Academy
 {
@@ -27,7 +26,7 @@ public class TankAcademy : Academy
 
     public override void AcademyStep()
     {
-        if (startedStageCooldown && Time.time - timeWhenLastTankAlive > 1)
+        if (startedStageCooldown && Time.time - timeWhenLastTankAlive > 3)
         {
             Done();
             return;
@@ -51,6 +50,7 @@ public class TankAcademy : Academy
                 {
                     //t.AddReward(10);
                 }
+                Debug.Log("Tank" + t.m_TankId + " reward = " + t.GetCumulativeReward());
                 t.Done();
             }
             startedStageCooldown = true;
@@ -102,6 +102,48 @@ public class TankAcademy : Academy
         }
     }
 
+    internal void EventGoalSphereHitByBullet(int bulletTankId)
+    {
+        ResetGoalSphere();
+
+        for (int i = 0; i < m_Agents.Length; i++)
+        {
+            TankAgentScript t = m_Agents[i].GetComponent<TankAgentScript>();
+            if (bulletTankId == t.m_TankId)
+            {
+                //t.AddReward(1);
+                t.HitPoint();
+            }
+        }
+    }
+
+    private void ResetGoalSphere()
+    {
+        int d = 30;
+        Vector3 newPos = new Vector3(Random.Range(-d, d), 1.5f, Random.Range(-d, d));
+        m_goalSphere.transform.position = newPos;
+        Vector2 v = Random.insideUnitCircle.normalized * 10;
+        //Vector3 newVel = new Vector3(v.x, 0, v.y);
+        Vector3 newVel = new Vector3(0, 0, 0);
+        m_goalSphere.GetComponent<Rigidbody>().velocity = newVel;
+    }
+
+    List<float> goalSphereObservationList = new List<float>();
+    public List<float> GetRelativeGoalSphereObservations(Transform t)
+    {
+        goalSphereObservationList.Clear();
+        Vector3 relativeVector = m_goalSphere.transform.position - t.position;
+        goalSphereObservationList.Add(relativeVector.x);
+        goalSphereObservationList.Add(relativeVector.z);
+        goalSphereObservationList.Add(Vector3.Distance(m_goalSphere.transform.position, t.position));
+        float signedAngle = Vector3.SignedAngle(transform.forward, relativeVector, transform.up);
+        goalSphereObservationList.Add(signedAngle);
+        Rigidbody r = m_goalSphere.GetComponent<Rigidbody>();
+        goalSphereObservationList.Add(r.velocity.x);
+        goalSphereObservationList.Add(r.velocity.z);
+        return goalSphereObservationList;
+    }
+
     public void EventTankTookDamage(int tankId, int bulletTankId, float damage, float startingHealth)
     {
         for(int i = 0; i < m_Agents.Length; i++)
@@ -144,6 +186,8 @@ public class TankAcademy : Academy
         {
             if (m_Agents[i] != null)
             {
+                TankAgentScript currentTankAgent = m_Agents[i].GetComponent<TankAgentScript>();
+                currentTankAgent.Done();
                 Destroy(m_Agents[i]);
             }
         }
@@ -186,6 +230,8 @@ public class TankAcademy : Academy
 
         TankShell.DisableAllShells();
 
+        ResetGoalSphere();
+
         startedStageCooldown = false;
         timeOfEpisodeStart = Time.time;
     }
@@ -200,4 +246,6 @@ public class TankAcademy : Academy
         agent.AgentReset();
         return agentObj;
     }
+
+
 }

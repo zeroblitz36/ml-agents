@@ -88,6 +88,11 @@ public class TankAgentScript : Agent
         }
     }
 
+    public void HitPoint()
+    {
+        AddReward(1);
+    }
+
     private void OnDeath()
     {
         Done();
@@ -130,7 +135,9 @@ public class TankAgentScript : Agent
         //    rayPer = gameObject.AddComponent(typeof(RayPerception)) as RayPerception;
         //}
         
-        List<float> rayList = rayPer.Perceive(rayDistance, rayAngles,new string[]{ "tank", "stage" }, 1.5f, 1.5f);
+        List<float> rayList = rayPer.Perceive(rayDistance, rayAngles,new string[]{ "tank", "stage","goal" }, 1.5f, 1.5f);
+
+        AddVectorObs(tankAcademy.GetRelativeGoalSphereObservations(transform));
         /*
         float[] logRayListInfo = rayList.ToArray();
         for(int i = 0; i < logRayListInfo.Length; i++)
@@ -286,5 +293,10 @@ public class TankAgentScript : Agent
                 m_ShellSpeed * m_FireTransform.forward,
                 m_TankId);
         }
+    }
+
+    public override void AgentOnDone()
+    {
+        base.AgentOnDone();
     }
 }

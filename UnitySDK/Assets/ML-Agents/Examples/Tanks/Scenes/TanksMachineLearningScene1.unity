@@ -408,7 +408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714033573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.58, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -749,7 +749,7 @@ MonoBehaviour:
   - {fileID: 783069025}
   - {fileID: 681674084}
   m_NumberOfAgents: 1
-  m_isPlayerPresent: 1
+  m_isPlayerPresent: 0
   m_TankAgentPrefab: {fileID: 569009397727213909, guid: 3c598027605ef264f8ff9c0b6bca38cf,
     type: 3}
   m_PlayerBrain: {fileID: 11400000, guid: 7bbcc87627bd7244a9b6c9c54399da5f, type: 2}

@@ -682,6 +682,7 @@ MonoBehaviour:
   m_Speed: 1
   m_TurnSpeed: 180
   m_StartingHealth: 100
+  m_CurrentHealth: 0
   m_Slider: {fileID: 569009396524315158}
   m_FillImage: {fileID: 569009398258855068}
   m_FullHealthColor: {r: 0, g: 1, b: 0, a: 1}
