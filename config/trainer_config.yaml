@@ -275,3 +275,7 @@ TankArenaLearningBrain:
     beta: 1.0e-2
     max_steps: 1e7
     num_epoch: 3
+
+RollerAgentLearningBrain:
+    batch_size: 10
+    buffer_size: 100

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TankArenaAgent : Agent
 {
+    /*
     public int m_TankId;
     public float m_Speed;
     public float m_TurnSpeed;
@@ -82,32 +83,6 @@ public class TankArenaAgent : Agent
 
     public override void CollectObservations()
     {
-        /*
-        //position
-        AddVectorObs(transform.position.x);
-        AddVectorObs(transform.position.z);
-        //distance from center 
-        AddVectorObs(Vector3.Distance(transform.position, tankArena.transform.position));
-        //velocity
-        Vector3 vel = transform.InverseTransformDirection(rBody.velocity);
-        AddVectorObs(vel.x);
-        AddVectorObs(vel.z);
-
-
-        GameObject pointSpere = tankArena.GetCurrentPointSphere();
-        Vector3 relativeVector = pointSpere.transform.position - transform.position;
-        //sphere position
-        AddVectorObs(relativeVector.x);
-        AddVectorObs(relativeVector.z);
-        //distance to sphere
-        AddVectorObs(Vector3.Distance(transform.position, pointSpere.transform.position));
-        Rigidbody r = pointSpere.GetComponent<Rigidbody>();
-        vel = pointSpere.transform.InverseTransformDirection(r.velocity);
-        //sphere velocity
-        AddVectorObs(vel.x);
-        AddVectorObs(vel.z);
-        */
-
         float rayDistance = 50f;
         float[] rayAngles = { 20f, 90f, 160f, 45f, 135f, 70f, 110f };
         string[] detectableObjects = { "goal"};
@@ -116,4 +91,5 @@ public class TankArenaAgent : Agent
         AddVectorObs(localVelocity.x);
         AddVectorObs(localVelocity.z);
     }
+    */
 }

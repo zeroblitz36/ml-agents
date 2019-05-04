@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 188292127240159401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 188292128385830107}
   m_RootOrder: 0
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 188292128385830107}
   - component: {fileID: 188292128385830104}
   m_Layer: 0
-  m_Name: TankStage
+  m_Name: TankArena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,8 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce19b012b32b0be438630fa70970afae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PointSpherePrefab: {fileID: 7949658360078809259, guid: 75ff20534f74148498a1ce1f6a71cd0a,
+  rollerAgentPrefab: {fileID: 7816711888978689371, guid: 7b3da08e3f804b8489adfa3e2d639358,
     type: 3}
-  m_RedMaterial: {fileID: 2100000, guid: 14324848a330c4217817001de3315e6e, type: 2}
-  m_TankPrefab: {fileID: 8389408660675314664, guid: 961846398a533f84aacbbfd3b4291d19,
+  targetPrefab: {fileID: 4738013313207227241, guid: 267ef446df780d548bd9db8be72895bb,
     type: 3}

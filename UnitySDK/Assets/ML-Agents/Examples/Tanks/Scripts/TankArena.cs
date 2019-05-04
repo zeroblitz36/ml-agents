@@ -2,26 +2,28 @@
 
 public class TankArena : MonoBehaviour
 {
-    public GameObject m_PointSpherePrefab;
-    public Material m_RedMaterial;
+    public GameObject rollerAgentPrefab;
+    public GameObject targetPrefab;
 
-    private GameObject currentPointSphere = null;
+    private GameObject rollerAgentObject;
+    private GameObject targetObject;
 
-    public GameObject m_TankPrefab;
-    private GameObject tank;
-    private TankArenaAgent tankArenaAgent;
-
+    private RollerAgent rollerAgent;
     private void Start()
     {
-        tank = Instantiate(m_TankPrefab);
-        tankArenaAgent = tank.GetComponent<TankArenaAgent>();
-        tankArenaAgent.tankArena = this;
+        rollerAgentObject = Instantiate(rollerAgentPrefab,
+            new Vector3(0, transform.position.y + 0.5f, 0),
+            Quaternion.identity);
+        rollerAgent = rollerAgentObject.GetComponent<RollerAgent>();
+        rollerAgent.tankArena = this;
 
-        currentPointSphere = Instantiate(m_PointSpherePrefab);
-    }
-
-    public GameObject GetCurrentPointSphere()
-    {
-        return currentPointSphere;
+        targetObject = Instantiate(targetPrefab,
+            new Vector3(
+                Random.Range(-4, 4),
+                transform.position.y + 0.5f,
+                Random.Range(-4, 4)
+            ),
+            Quaternion.identity);
+        rollerAgent.target = targetObject.transform;
     }
 }

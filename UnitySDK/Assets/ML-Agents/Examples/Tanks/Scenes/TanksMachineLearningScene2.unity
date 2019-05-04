@@ -153,14 +153,16 @@ MonoBehaviour:
     broadcastingBrains:
     - {fileID: 11400000, guid: cfca6b4d1b967a047bddf5d947fa1971, type: 2}
     - {fileID: 11400000, guid: 59604debbd1b7c2488b5df7147aab748, type: 2}
+    - {fileID: 11400000, guid: 877aa78b77c332a459adc2c0783b9d97, type: 2}
+    - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
     _brainsToControl:
-    - {fileID: 11400000, guid: cfca6b4d1b967a047bddf5d947fa1971, type: 2}
+    - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
   maxSteps: 0
   trainingConfiguration:
     width: 80
     height: 80
     qualityLevel: 1
-    timeScale: 1
+    timeScale: 100
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1280
@@ -172,7 +174,7 @@ MonoBehaviour:
     resetParameters: []
   m_TankArenaPrefab: {fileID: 188292128385830106, guid: 495862342df2c034db26a67ed5be700d,
     type: 3}
-  m_NumberOfArenas: 8
+  m_NumberOfArenas: 16
 --- !u!4 &382974253
 Transform:
   m_ObjectHideFlags: 0
@@ -264,7 +266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617668385}
   m_LocalRotation: {x: 0.5233911, y: 0, z: 0, w: 0.85209256}
-  m_LocalPosition: {x: 0, y: 37.5, z: -25}
+  m_LocalPosition: {x: 0, y: 12, z: -6.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -372,41 +374,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TankStage
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
         type: 3}
