@@ -1,11 +1,13 @@
 ﻿using MLAgents;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RollerAgent : Agent
 {
     Rigidbody rBody;
     public TankArena tankArena;
-    public Transform target;
+    public GameObject target;
+    private Rigidbody targetRigidBody;
     public float speed;
 
     public override void InitializeAgent()
@@ -21,26 +23,33 @@ public class RollerAgent : Agent
         controlSignal.z = vectorAction[1];
         rBody.AddForce(controlSignal * speed);
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if(distanceToTarget < 1.5f)
+        //Target fell off
+        if (target.transform.position.y + 1 < tankArena.transform.position.y)
         {
             SetReward(1);
             Done();
             return;
         }
 
-        // Fell off platform
-        if (transform.position.y < tankArena.transform.position.y)
+        //Agent fell off platform
+        if (transform.position.y - 0.45f < tankArena.transform.position.y)
         {
             SetReward(-1);
             Done();
             return;
         }
+
+        //AddReward(-1f / agentParameters.maxStep);
     }
 
     public override void AgentReset()
-    {
-        if(transform.position.y < tankArena.transform.position.y)
+    { 
+        if (!targetRigidBody)
+        {
+            targetRigidBody = target.GetComponent<Rigidbody>();
+        }
+
+        if (transform.position.y < tankArena.transform.position.y)
         {
             rBody.angularVelocity = Vector3.zero;
             rBody.velocity = Vector3.zero;
@@ -51,22 +60,31 @@ public class RollerAgent : Agent
         float distanceToTarget;
         do
         {
+            Vector2 r = Random.insideUnitCircle * 4.5f;
             targetPosition = new Vector3(
-                Random.Range(-4, 4),
+                r.x,
                 tankArena.transform.position.y + 0.5f,
-                Random.Range(-4, 4)
+                r.y
             );
             distanceToTarget = Vector3.Distance(transform.position, targetPosition);
         } while (distanceToTarget < 2f);
 
-        target.position = targetPosition;
+        target.transform.position = targetPosition;
+        targetRigidBody.velocity = Vector3.zero;
+        targetRigidBody.angularVelocity = Vector3.zero;
     }
 
     public override void CollectObservations()
     {
-        Vector3 relativePosition = target.position - transform.position;
+        AddVectorObs(transform.position.x);
+        AddVectorObs(transform.position.z);
+
+        Vector3 relativePosition = target.transform.position - transform.position;
         AddVectorObs(relativePosition.x);
         AddVectorObs(relativePosition.z);
+
+        AddVectorObs(transform.position.x);
+        AddVectorObs(transform.position.z);
 
         float distanceFromCenter = Vector3.Distance(
                 transform.position,
@@ -74,10 +92,88 @@ public class RollerAgent : Agent
             );
         AddVectorObs(distanceFromCenter);
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
         AddVectorObs(distanceToTarget);
 
+        float targetDistanceFromCenter = Vector3.Distance(
+                target.transform.position,
+                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+            );
+        AddVectorObs(targetDistanceFromCenter);
+        /*
+        Vector3 localVelocity = transform.InverseTransformDirection(rBody.velocity);
+        AddVectorObs(localVelocity.x);
+        AddVectorObs(localVelocity.z);
+        */
         AddVectorObs(rBody.velocity.x);
         AddVectorObs(rBody.velocity.z);
+
+        AddVectorObs(targetRigidBody.velocity.x);
+        AddVectorObs(targetRigidBody.velocity.z);
+
+        /*
+        float rayDistance = 10f;
+        int n = 36;
+        float[] rayAngles = new float[n];
+        for(int i = 0; i < n; i++)
+        {
+            rayAngles[i] = i * (360 / n);
+        }
+        List<float> rays = Perceive(rayDistance, rayAngles, 1<<16);
+        AddVectorObs(rays);
+        */
+    }
+
+    List<float> perceptionBuffer = new List<float>();
+    Vector3 endPosition;
+    RaycastHit hit;
+
+    public List<float> Perceive(float rayDistance,
+            float[] rayAngles, int layerMask)
+    {
+        perceptionBuffer.Clear();
+        // For each ray sublist stores categorial information on detected object
+        // along with object distance.
+        foreach (float angle in rayAngles)
+        {
+            Vector3 v = new Vector3(
+                Mathf.Cos(DegreeToRadian(angle)),
+                0,
+                Mathf.Sin(DegreeToRadian(angle))
+            );
+            Debug.Log("angle = " + angle + " v = " + v);
+            endPosition = transform.position + v * rayDistance;
+            
+            if(Physics.Linecast(transform.position, endPosition, out hit, layerMask))
+            {
+                perceptionBuffer.Add(hit.distance / rayDistance);
+            }
+            else
+            {
+                perceptionBuffer.Add(1);
+            }
+
+            if (Application.isEditor)
+            {
+                Debug.DrawRay(transform.position,
+                    Vector3.Lerp(Vector3.zero,v * rayDistance, perceptionBuffer[perceptionBuffer.Count-1]),
+                    Color.black, 
+                    0.01f, true);
+            }
+        }
+
+        return perceptionBuffer;
+    }
+
+    public static Vector3 PolarToCartesian(float radius, float angle)
+    {
+        float x = radius * Mathf.Cos(DegreeToRadian(angle));
+        float z = radius * Mathf.Sin(DegreeToRadian(angle));
+        return new Vector3(x, 0f, z);
+    }
+
+    public static float DegreeToRadian(float degree)
+    {
+        return degree * Mathf.PI / 180f;
     }
 }

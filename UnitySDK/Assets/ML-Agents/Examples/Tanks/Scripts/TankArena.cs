@@ -24,6 +24,6 @@ public class TankArena : MonoBehaviour
                 Random.Range(-4, 4)
             ),
             Quaternion.identity);
-        rollerAgent.target = targetObject.transform;
+        rollerAgent.target = targetObject;
     }
 }
