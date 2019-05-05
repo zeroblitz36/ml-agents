@@ -155,7 +155,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 59604debbd1b7c2488b5df7147aab748, type: 2}
     - {fileID: 11400000, guid: 877aa78b77c332a459adc2c0783b9d97, type: 2}
     - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
-    _brainsToControl: []
+    _brainsToControl:
+    - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
   maxSteps: 0
   trainingConfiguration:
     width: 80
@@ -173,7 +174,7 @@ MonoBehaviour:
     resetParameters: []
   m_TankArenaPrefab: {fileID: 188292128385830106, guid: 495862342df2c034db26a67ed5be700d,
     type: 3}
-  m_NumberOfArenas: 1
+  m_NumberOfArenas: 16
 --- !u!4 &382974253
 Transform:
   m_ObjectHideFlags: 0

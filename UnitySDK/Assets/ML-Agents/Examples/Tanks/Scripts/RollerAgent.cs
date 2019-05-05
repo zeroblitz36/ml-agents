@@ -149,9 +149,6 @@ public class RollerAgent : Agent
         AddVectorObs(transform.position.x);
         AddVectorObs(transform.position.z);
 
-        AddVectorObs(transform.position.x);
-        AddVectorObs(transform.position.z);
-
         float distanceFromCenter = Vector3.Distance(
                 transform.position,
                 new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
