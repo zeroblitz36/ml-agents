@@ -277,5 +277,15 @@ TankArenaLearningBrain:
     num_epoch: 3
 
 RollerAgentLearningBrain:
-    batch_size: 10
-    buffer_size: 100
+    use_curiosity: true
+    summary_freq: 2000
+    curiosity_strength: 0.01
+    curiosity_enc_size: 256
+    time_horizon: 128
+    batch_size: 128
+    buffer_size: 2048
+    hidden_units: 512
+    num_layers: 2
+    beta: 1.0e-2
+    max_steps: 5.0e5
+    num_epoch: 3

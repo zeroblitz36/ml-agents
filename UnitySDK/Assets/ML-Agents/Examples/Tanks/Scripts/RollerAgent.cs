@@ -6,9 +6,21 @@ public class RollerAgent : Agent
 {
     Rigidbody rBody;
     public TankArena tankArena;
-    public GameObject target;
-    private Rigidbody targetRigidBody;
+    public GameObject target1;
+    public GameObject target2;
+    public GameObject target3;
+    private Rigidbody target1RigidBody;
+    private Rigidbody target2RigidBody;
+    private Rigidbody target3RigidBody;
     public float speed;
+
+    /*
+     * If currentMission is
+     * 1 : drop off target1
+     * 2 : drop off target2
+     * 3 : drop off target3
+     */
+    private int currentMission = 1;
 
     public override void InitializeAgent()
     {
@@ -23,18 +35,58 @@ public class RollerAgent : Agent
         controlSignal.z = vectorAction[1];
         rBody.AddForce(controlSignal * speed);
 
-        //Target fell off
-        if (target.transform.position.y + 1 < tankArena.transform.position.y)
+        //Target1 fell off
+        if (target1.activeSelf && target1.transform.position.y + 1 < tankArena.transform.position.y)
         {
-            SetReward(1);
-            Done();
+            if(currentMission == 1)
+            {
+                currentMission++;
+                target1.SetActive(false);
+                AddReward(1 / 3f);
+            }
+            else
+            {
+                Done();
+            }
+            return;
+        }
+        //Target2 fell off
+        if (target2.activeSelf && target2.transform.position.y + 1 < tankArena.transform.position.y)
+        {
+            if (currentMission == 2)
+            {
+                currentMission++;
+                target2.SetActive(false);
+                AddReward(1 / 3f);
+                //Done();
+            }
+            else
+            {
+                Done();
+            }
+            return;
+        }
+        //Target3 fell off
+        if (target3.activeSelf && target3.transform.position.y + 1 < tankArena.transform.position.y)
+        {
+            if (currentMission == 3)
+            {
+                //SetReward(1);
+                target3.SetActive(false);
+                AddReward(1 / 3f);
+                Done();
+            }
+            else
+            {
+                Done();
+            }
             return;
         }
 
         //Agent fell off platform
-        if (transform.position.y - 0.45f < tankArena.transform.position.y)
+        if (transform.position.y < tankArena.transform.position.y + 0.45f)
         {
-            SetReward(-1);
+            //SetReward(-1);
             Done();
             return;
         }
@@ -44,44 +96,35 @@ public class RollerAgent : Agent
 
     public override void AgentReset()
     { 
-        if (!targetRigidBody)
+        if (!target1RigidBody)
         {
-            targetRigidBody = target.GetComponent<Rigidbody>();
+            target1RigidBody = target1.GetComponent<Rigidbody>();
+        }
+        if (!target2RigidBody)
+        {
+            target2RigidBody = target2.GetComponent<Rigidbody>();
+        }
+        if (!target3RigidBody)
+        {
+            target3RigidBody = target3.GetComponent<Rigidbody>();
         }
 
-        if (transform.position.y < tankArena.transform.position.y)
+        if (transform.position.y < tankArena.transform.position.y + 0.45f)
         {
             rBody.angularVelocity = Vector3.zero;
             rBody.velocity = Vector3.zero;
             transform.position = new Vector3(0, tankArena.transform.position.y + 0.5f, 0);
         }
 
-        Vector3 targetPosition;
-        float distanceToTarget;
-        do
-        {
-            Vector2 r = Random.insideUnitCircle * 4.5f;
-            targetPosition = new Vector3(
-                r.x,
-                tankArena.transform.position.y + 0.5f,
-                r.y
-            );
-            distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-        } while (distanceToTarget < 2f);
+        currentMission = 1;
 
-        target.transform.position = targetPosition;
-        targetRigidBody.velocity = Vector3.zero;
-        targetRigidBody.angularVelocity = Vector3.zero;
+        ResetAllTargets();
     }
 
     public override void CollectObservations()
     {
         AddVectorObs(transform.position.x);
         AddVectorObs(transform.position.z);
-
-        Vector3 relativePosition = target.transform.position - transform.position;
-        AddVectorObs(relativePosition.x);
-        AddVectorObs(relativePosition.z);
 
         AddVectorObs(transform.position.x);
         AddVectorObs(transform.position.z);
@@ -92,36 +135,62 @@ public class RollerAgent : Agent
             );
         AddVectorObs(distanceFromCenter);
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-        AddVectorObs(distanceToTarget);
-
-        float targetDistanceFromCenter = Vector3.Distance(
-                target.transform.position,
-                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
-            );
-        AddVectorObs(targetDistanceFromCenter);
-        /*
-        Vector3 localVelocity = transform.InverseTransformDirection(rBody.velocity);
-        AddVectorObs(localVelocity.x);
-        AddVectorObs(localVelocity.z);
-        */
         AddVectorObs(rBody.velocity.x);
         AddVectorObs(rBody.velocity.z);
 
-        AddVectorObs(targetRigidBody.velocity.x);
-        AddVectorObs(targetRigidBody.velocity.z);
+        //Current mission
+        AddVectorObs(currentMission);
 
-        /*
-        float rayDistance = 10f;
-        int n = 36;
-        float[] rayAngles = new float[n];
-        for(int i = 0; i < n; i++)
-        {
-            rayAngles[i] = i * (360 / n);
-        }
-        List<float> rays = Perceive(rayDistance, rayAngles, 1<<16);
-        AddVectorObs(rays);
-        */
+        //Target1
+        Vector3 relativePosition = target1.transform.position - transform.position;
+        AddVectorObs(relativePosition.x);
+        AddVectorObs(relativePosition.z);
+
+        float distanceToTarget = Vector3.Distance(transform.position, target1.transform.position);
+        AddVectorObs(distanceToTarget);
+
+        float targetDistanceFromCenter = Vector3.Distance(
+                target1.transform.position,
+                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+            );
+        AddVectorObs(targetDistanceFromCenter);
+
+        AddVectorObs(target1RigidBody.velocity.x);
+        AddVectorObs(target1RigidBody.velocity.z);
+
+        //Target2
+        relativePosition = target2.transform.position - transform.position;
+        AddVectorObs(relativePosition.x);
+        AddVectorObs(relativePosition.z);
+
+        distanceToTarget = Vector3.Distance(transform.position, target2.transform.position);
+        AddVectorObs(distanceToTarget);
+
+        targetDistanceFromCenter = Vector3.Distance(
+                target2.transform.position,
+                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+            );
+        AddVectorObs(targetDistanceFromCenter);
+
+        AddVectorObs(target2RigidBody.velocity.x);
+        AddVectorObs(target2RigidBody.velocity.z);
+
+        //Target3
+        relativePosition = target3.transform.position - transform.position;
+        AddVectorObs(relativePosition.x);
+        AddVectorObs(relativePosition.z);
+
+        distanceToTarget = Vector3.Distance(transform.position, target3.transform.position);
+        AddVectorObs(distanceToTarget);
+
+        targetDistanceFromCenter = Vector3.Distance(
+                target3.transform.position,
+                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+            );
+        AddVectorObs(targetDistanceFromCenter);
+
+        AddVectorObs(target3RigidBody.velocity.x);
+        AddVectorObs(target3RigidBody.velocity.z);
     }
 
     List<float> perceptionBuffer = new List<float>();
@@ -175,5 +244,66 @@ public class RollerAgent : Agent
     public static float DegreeToRadian(float degree)
     {
         return degree * Mathf.PI / 180f;
+    }
+
+    private void ResetAllTargets()
+    {
+        target1RigidBody.velocity = Vector3.zero;
+        target1RigidBody.angularVelocity = Vector3.zero;
+        target2RigidBody.velocity = Vector3.zero;
+        target2RigidBody.angularVelocity = Vector3.zero;
+        target3RigidBody.velocity = Vector3.zero;
+        target3RigidBody.angularVelocity = Vector3.zero;
+
+        target1.SetActive(true);
+        target2.SetActive(true);
+        target3.SetActive(true);
+
+        float spawnHeight = tankArena.transform.position.y + 0.5f;
+        float arenaRadius = 4.5f;
+
+        Vector3 targetPosition;
+        float distanceToAgent;
+        float distanceToTarget1;
+        float distanceToTarget2;
+        do
+        {
+            Vector2 r = Random.insideUnitCircle * arenaRadius;
+            targetPosition = new Vector3(
+                r.x,
+                spawnHeight,
+                r.y
+            );
+            distanceToAgent = Vector3.Distance(transform.position, targetPosition);
+        } while (distanceToAgent < 1.1f);
+
+        target1.transform.position = targetPosition;
+
+        do
+        {
+            Vector2 r = Random.insideUnitCircle * arenaRadius;
+            targetPosition = new Vector3(
+                r.x,
+                spawnHeight,
+                r.y
+            );
+            distanceToAgent = Vector3.Distance(transform.position, targetPosition);
+            distanceToTarget1 = Vector3.Distance(target1.transform.position, targetPosition);
+        } while (distanceToAgent < 1.1f || distanceToTarget1 < 1.1f);
+        target2.transform.position = targetPosition;
+
+        do
+        {
+            Vector2 r = Random.insideUnitCircle * arenaRadius;
+            targetPosition = new Vector3(
+                r.x,
+                spawnHeight,
+                r.y
+            );
+            distanceToAgent = Vector3.Distance(transform.position, targetPosition);
+            distanceToTarget1 = Vector3.Distance(target1.transform.position, targetPosition);
+            distanceToTarget2 = Vector3.Distance(target2.transform.position, targetPosition);
+        } while (distanceToAgent < 1.1f || distanceToTarget1 < 1.1f || distanceToTarget2 < 1.1f);
+        target3.transform.position = targetPosition;
     }
 }

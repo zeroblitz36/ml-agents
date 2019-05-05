@@ -46,7 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rollerAgentPrefab: {fileID: 7816711888978689371, guid: 7b3da08e3f804b8489adfa3e2d639358,
     type: 3}
-  targetPrefab: {fileID: 8688077953687793094, guid: 2ad2ac2798d76df42a0ce70ae2b1b2e0,
+  target1Prefab: {fileID: 8688077953687793094, guid: 2ad2ac2798d76df42a0ce70ae2b1b2e0,
+    type: 3}
+  target2Prefab: {fileID: 4275567803015703292, guid: d56c64c5b3d63734d9e3ee1c6318a0f2,
+    type: 3}
+  target3Prefab: {fileID: 1157867616833750530, guid: 6d06d18e10f59ac4f98be327671f911d,
     type: 3}
 --- !u!1 &6500228055938135259
 GameObject:

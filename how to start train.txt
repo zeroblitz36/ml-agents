@@ -26,3 +26,8 @@ TankLearningBrain:
     num_layers: 3
     hidden_units: 512
     epsilon: 0.1
+
+    
+RollerAgentLearningBrain:
+    batch_size: 10
+    buffer_size: 100

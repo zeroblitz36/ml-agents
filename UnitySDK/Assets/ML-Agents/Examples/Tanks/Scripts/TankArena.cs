@@ -3,10 +3,14 @@
 public class TankArena : MonoBehaviour
 {
     public GameObject rollerAgentPrefab;
-    public GameObject targetPrefab;
+    public GameObject target1Prefab;
+    public GameObject target2Prefab;
+    public GameObject target3Prefab;
 
     private GameObject rollerAgentObject;
-    private GameObject targetObject;
+    private GameObject target1Object;
+    private GameObject target2Object;
+    private GameObject target3Object;
 
     private RollerAgent rollerAgent;
     private void Start()
@@ -17,13 +21,11 @@ public class TankArena : MonoBehaviour
         rollerAgent = rollerAgentObject.GetComponent<RollerAgent>();
         rollerAgent.tankArena = this;
 
-        targetObject = Instantiate(targetPrefab,
-            new Vector3(
-                Random.Range(-4, 4),
-                transform.position.y + 0.5f,
-                Random.Range(-4, 4)
-            ),
-            Quaternion.identity);
-        rollerAgent.target = targetObject;
+        target1Object = Instantiate(target1Prefab);
+        target2Object = Instantiate(target2Prefab);
+        target3Object = Instantiate(target3Prefab);
+        rollerAgent.target1 = target1Object;
+        rollerAgent.target2 = target2Object;
+        rollerAgent.target3 = target3Object;
     }
 }
