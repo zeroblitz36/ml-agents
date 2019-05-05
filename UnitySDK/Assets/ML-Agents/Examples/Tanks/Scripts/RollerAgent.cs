@@ -1,5 +1,6 @@
 ﻿using MLAgents;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class RollerAgent : Agent
@@ -14,6 +15,8 @@ public class RollerAgent : Agent
     private Rigidbody target3RigidBody;
     public float speed;
 
+    BrainEventManager brainEventManager = null;
+
     /*
      * If currentMission is
      * 1 : drop off target1
@@ -22,10 +25,18 @@ public class RollerAgent : Agent
      */
     private int currentMission = 1;
 
+    private static int atomicCounter = 0;
+
     public override void InitializeAgent()
     {
         base.InitializeAgent();
         rBody = GetComponent<Rigidbody>();
+
+        if(brain is PlayerBrain)
+        {
+            int c = Interlocked.Increment(ref atomicCounter);
+            brainEventManager = new BrainEventManager("BrainEventChain_"+c);
+        }
     }
 
     public override void AgentAction(float[] vectorAction, string textAction)
@@ -38,14 +49,17 @@ public class RollerAgent : Agent
         //Target1 fell off
         if (target1.activeSelf && target1.transform.position.y + 1 < tankArena.transform.position.y)
         {
-            if(currentMission == 1)
+            LogEvent("Target1_fell");
+            if (currentMission == 1)
             {
                 currentMission++;
+                LogEvent("CurrentMission="+currentMission);
                 target1.SetActive(false);
                 AddReward(1 / 3f);
             }
             else
             {
+                EndLogEvent(false);
                 Done();
             }
             return;
@@ -53,15 +67,18 @@ public class RollerAgent : Agent
         //Target2 fell off
         if (target2.activeSelf && target2.transform.position.y + 1 < tankArena.transform.position.y)
         {
+            LogEvent("Target2_fell");
             if (currentMission == 2)
             {
                 currentMission++;
+                LogEvent("CurrentMission=" + currentMission);
                 target2.SetActive(false);
                 AddReward(1 / 3f);
                 //Done();
             }
             else
             {
+                EndLogEvent(false);
                 Done();
             }
             return;
@@ -69,15 +86,18 @@ public class RollerAgent : Agent
         //Target3 fell off
         if (target3.activeSelf && target3.transform.position.y + 1 < tankArena.transform.position.y)
         {
+            LogEvent("Target3_fell");
             if (currentMission == 3)
             {
                 //SetReward(1);
                 target3.SetActive(false);
                 AddReward(1 / 3f);
+                EndLogEvent(true);
                 Done();
             }
             else
             {
+                EndLogEvent(false);
                 Done();
             }
             return;
@@ -87,6 +107,7 @@ public class RollerAgent : Agent
         if (transform.position.y < tankArena.transform.position.y + 0.45f)
         {
             //SetReward(-1);
+            EndLogEvent(false);
             Done();
             return;
         }
@@ -119,6 +140,8 @@ public class RollerAgent : Agent
         currentMission = 1;
 
         ResetAllTargets();
+
+        StartLogEvent();
     }
 
     public override void CollectObservations()
@@ -305,5 +328,60 @@ public class RollerAgent : Agent
             distanceToTarget2 = Vector3.Distance(target2.transform.position, targetPosition);
         } while (distanceToAgent < 1.1f || distanceToTarget1 < 1.1f || distanceToTarget2 < 1.1f);
         target3.transform.position = targetPosition;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        GameObject otherGameObject = collision.gameObject;
+        if(otherGameObject == target1)
+        {
+            LogEvent("CollideWithTarget1");
+            return;
+        }
+        else if(otherGameObject == target2)
+        {
+            LogEvent("CollideWithTarget2");
+            return;
+        }else if(otherGameObject == target3)
+        {
+            LogEvent("CollideWithTarget3");
+            return;
+        }
+    }
+
+    private void StartLogEvent()
+    {
+        if (brainEventManager == null)
+        {
+            return;
+        }
+        
+        brainEventManager.StartRecordingNewEvents();
+    }
+
+    private void LogEvent(string s)
+    {
+        if(brainEventManager == null)
+        {
+            return;
+        }
+
+        brainEventManager.RecordEvent(s);
+    }
+
+    private void EndLogEvent(bool successfull)
+    {
+        if (brainEventManager == null)
+        {
+            return;
+        }
+        if (successfull)
+        {
+            brainEventManager.RecordGoalSucces();
+        }
+        else
+        {
+            brainEventManager.RecordGoalFailed();
+        }
     }
 }

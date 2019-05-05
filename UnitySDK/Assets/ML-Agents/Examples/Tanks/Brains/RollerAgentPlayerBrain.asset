@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RollerAgentPlayerBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 20
+    vectorObservationSize: 26
     numStackedVectorObservations: 1
     vectorActionSize: 02000000
     cameraResolutions: []

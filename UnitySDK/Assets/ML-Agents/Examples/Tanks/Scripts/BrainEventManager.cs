@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class BrainEventManager : MonoBehaviour
+public class BrainEventManager
 {
 
     public class BrainEvent
@@ -25,7 +25,7 @@ public class BrainEventManager : MonoBehaviour
     public class BrainEventChain
     {
         private bool isGood;
-        public List<BrainEvent> brainEventList;
+        public List<BrainEvent> brainEventList = new List<BrainEvent>();
         public float startTime;
 
         public BrainEventChain(float startTime)
@@ -65,6 +65,11 @@ public class BrainEventManager : MonoBehaviour
     public string rootFileName;
     private string completeFileName;
 
+    public BrainEventManager(string rootFileName)
+    {
+        this.rootFileName = rootFileName;
+    }
+
     public void StartRecordingNewEvents()
     {
         if(currentWorkingBrainEventChain != null)
@@ -75,13 +80,18 @@ public class BrainEventManager : MonoBehaviour
         currentWorkingBrainEventChain.AddEvent(new BrainEvent(Time.time, "START"));
     }
 
-    public void RecordEvent(float timeWhenItTriggered, string eventName)
+    public void RecordEvent(string eventName)
     {
-        currentWorkingBrainEventChain.AddEvent(new BrainEvent(timeWhenItTriggered, eventName));
+        currentWorkingBrainEventChain.AddEvent(new BrainEvent(Time.time, eventName));
     }
 
     public void RecordGoalSucces()
     {
+        if (currentWorkingBrainEventChain == null)
+        {
+            Debug.LogError("No new event chain was created !");
+            return;
+        }
         currentWorkingBrainEventChain.AddEvent(new BrainEvent(Time.time, "SUCCESS"));
         currentWorkingBrainEventChain.IsGood = true;
         collectionOfAllBrainEventChains.Add(currentWorkingBrainEventChain);
@@ -91,6 +101,11 @@ public class BrainEventManager : MonoBehaviour
 
     public void RecordGoalFailed()
     {
+        if (currentWorkingBrainEventChain == null)
+        {
+            Debug.LogError("No new event chain was created !");
+            return;
+        }
         currentWorkingBrainEventChain.AddEvent(new BrainEvent(Time.time, "FAILED"));
         currentWorkingBrainEventChain.IsGood = false;
         collectionOfAllBrainEventChains.Add(currentWorkingBrainEventChain);
