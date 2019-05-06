@@ -8,12 +8,9 @@ public class RollerArenaAcademy : Academy
 
     public override void InitializeAcademy()
     {
-        base.InitializeAcademy();
-
-        //skip the first arena
-        for(int i = 1; i < m_NumberOfArenas; i++)
+        for(int i = 0; i < m_NumberOfArenas; i++)
         {
-            GameObject o = Instantiate(m_RollerArenaPrefab, new Vector3(0, -4 * i, 0), Quaternion.identity);
+            Instantiate(m_RollerArenaPrefab, new Vector3(0, -4 * i, 0), Quaternion.identity);
         }
     }
 

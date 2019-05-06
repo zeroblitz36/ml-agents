@@ -151,10 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   broadcastHub:
     broadcastingBrains:
-    - {fileID: 11400000, guid: cfca6b4d1b967a047bddf5d947fa1971, type: 2}
-    - {fileID: 11400000, guid: 59604debbd1b7c2488b5df7147aab748, type: 2}
-    - {fileID: 11400000, guid: 877aa78b77c332a459adc2c0783b9d97, type: 2}
     - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
+    - {fileID: 11400000, guid: 877aa78b77c332a459adc2c0783b9d97, type: 2}
     _brainsToControl: []
   maxSteps: 0
   trainingConfiguration:
@@ -186,7 +184,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1617668385
 GameObject:
@@ -362,37 +360,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &188292128509364302
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 188292128385830106, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_Name
-      value: TankStage
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188292128385830107, guid: 495862342df2c034db26a67ed5be700d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 495862342df2c034db26a67ed5be700d, type: 3}
