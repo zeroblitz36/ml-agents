@@ -34,8 +34,8 @@ public class RollerAgent : Agent
 
         if(brain is PlayerBrain)
         {
-            int c = Interlocked.Increment(ref atomicCounter);
-            brainEventManager = new BrainEventManager("BrainEventChain_"+c);
+            //int c = Interlocked.Increment(ref atomicCounter);
+            //brainEventManager = new BrainEventManager("BrainEventChain_"+c);
         }
     }
 
