@@ -1,9 +1,9 @@
 ﻿using MLAgents;
 using UnityEngine;
 
-public class TankArenaAcademy : Academy
+public class RollerArenaAcademy : Academy
 {
-    public GameObject m_TankArenaPrefab;
+    public GameObject m_RollerArenaPrefab;
     public int m_NumberOfArenas;
 
     public override void InitializeAcademy()
@@ -13,7 +13,7 @@ public class TankArenaAcademy : Academy
         //skip the first arena
         for(int i = 1; i < m_NumberOfArenas; i++)
         {
-            GameObject o = Instantiate(m_TankArenaPrefab, new Vector3(0, -4 * i, 0), Quaternion.identity);
+            GameObject o = Instantiate(m_RollerArenaPrefab, new Vector3(0, -4 * i, 0), Quaternion.identity);
         }
     }
 

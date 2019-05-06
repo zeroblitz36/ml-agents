@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 382974253}
   - component: {fileID: 382974252}
   m_Layer: 0
-  m_Name: TankAcademy
+  m_Name: RollerAcademy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,8 +155,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 59604debbd1b7c2488b5df7147aab748, type: 2}
     - {fileID: 11400000, guid: 877aa78b77c332a459adc2c0783b9d97, type: 2}
     - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
-    _brainsToControl:
-    - {fileID: 11400000, guid: 6db323292c463c74fa1921170ddc7519, type: 2}
+    _brainsToControl: []
   maxSteps: 0
   trainingConfiguration:
     width: 80
@@ -172,7 +171,7 @@ MonoBehaviour:
     targetFrameRate: 60
   resetParameters:
     resetParameters: []
-  m_TankArenaPrefab: {fileID: 188292128385830106, guid: 495862342df2c034db26a67ed5be700d,
+  m_RollerArenaPrefab: {fileID: 188292128385830106, guid: 495862342df2c034db26a67ed5be700d,
     type: 3}
   m_NumberOfArenas: 16
 --- !u!4 &382974253
@@ -183,7 +182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382974251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0418513, y: 2.4161963, z: 0.51547766}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
