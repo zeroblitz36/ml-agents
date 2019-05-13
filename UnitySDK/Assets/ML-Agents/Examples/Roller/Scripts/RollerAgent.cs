@@ -17,6 +17,8 @@ public class RollerAgent : Agent
 
     BrainEventManager brainEventManager = null;
 
+    private const bool giveGradualRewardForEachSphere = false;
+
     /*
      * If currentMission is
      * 1 : drop off target1
@@ -55,7 +57,10 @@ public class RollerAgent : Agent
                 currentMission++;
                 LogEvent("CurrentMission="+currentMission);
                 target1.SetActive(false);
-                AddReward(1 / 3f);
+                if (giveGradualRewardForEachSphere)
+                {
+                    AddReward(1 / 3f);
+                }
             }
             else
             {
@@ -73,8 +78,10 @@ public class RollerAgent : Agent
                 currentMission++;
                 LogEvent("CurrentMission=" + currentMission);
                 target2.SetActive(false);
-                AddReward(1 / 3f);
-                //Done();
+                if (giveGradualRewardForEachSphere)
+                {
+                    AddReward(1 / 3f);
+                }
             }
             else
             {
@@ -89,9 +96,15 @@ public class RollerAgent : Agent
             LogEvent("Target3_fell");
             if (currentMission == 3)
             {
-                //SetReward(1);
                 target3.SetActive(false);
-                AddReward(1 / 3f);
+                if (giveGradualRewardForEachSphere)
+                {
+                    AddReward(1 / 3f);
+                }
+                else
+                {
+                    AddReward(1);
+                }
                 EndLogEvent(true);
                 Done();
             }
