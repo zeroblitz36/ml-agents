@@ -94,3 +94,4 @@ ml-agents-protobuf/Grpc*
 # Ignore PyPi build files.
 dist/
 build/
+.~lock.dissertation.odt#
