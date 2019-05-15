@@ -17,8 +17,8 @@ public class RollerAgent : Agent
 
     BrainEventManager brainEventManager = null;
 
-    private const bool giveGradualRewardForEachSphere = false;
-
+    private const bool giveGradualRewardForEachSphere = true;
+    private const bool eachMissionIsItsOwnBoolean = false;
     /*
      * If currentMission is
      * 1 : drop off target1
@@ -172,7 +172,17 @@ public class RollerAgent : Agent
         AddVectorObs(rBody.velocity.z);
 
         //Current mission
-        AddVectorObs(currentMission);
+        if (eachMissionIsItsOwnBoolean)
+        {
+            for(int i = 1; i <= 3; i++)
+            {
+                AddVectorObs(currentMission == i);
+            }
+        }
+        else
+        {
+            AddVectorObs(currentMission);
+        }
 
         //Target1
         Vector3 relativePosition = target1.transform.position - transform.position;
