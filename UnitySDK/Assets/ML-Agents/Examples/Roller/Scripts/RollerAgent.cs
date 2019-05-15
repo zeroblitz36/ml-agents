@@ -19,6 +19,7 @@ public class RollerAgent : Agent
 
     private const bool giveGradualRewardForEachSphere = true;
     private const bool eachMissionIsItsOwnBoolean = false;
+    private const bool rewardOnTouch = true;
     /*
      * If currentMission is
      * 1 : drop off target1
@@ -41,6 +42,60 @@ public class RollerAgent : Agent
         }
     }
 
+    private void Goal1Achieved()
+    {
+        if (currentMission == 1)
+        {
+            currentMission++;
+            target1.SetActive(false);
+            if (giveGradualRewardForEachSphere)
+            {
+                AddReward(1 / 3f);
+            }
+        }
+        else
+        {
+            Done();
+        }
+    }
+
+    private void Goal2Achieved()
+    {
+        if (currentMission == 2)
+        {
+            currentMission++;
+            target2.SetActive(false);
+            if (giveGradualRewardForEachSphere)
+            {
+                AddReward(1 / 3f);
+            }
+        }
+        else
+        {
+            Done();
+        }
+    }
+
+    private void Goal3Achieved()
+    {
+        if (currentMission == 3)
+        {
+            target3.SetActive(false);
+            if (giveGradualRewardForEachSphere)
+            {
+                AddReward(1 / 3f);
+            }
+            else
+            {
+                AddReward(1);
+            }
+            Done();
+        }
+        else
+        {
+            Done();
+        }
+    }
     public override void AgentAction(float[] vectorAction, string textAction)
     {
         Vector3 controlSignal = Vector3.zero;
@@ -51,68 +106,19 @@ public class RollerAgent : Agent
         //Target1 fell off
         if (target1.activeSelf && target1.transform.position.y + 1 < tankArena.transform.position.y)
         {
-            LogEvent("Target1_fell");
-            if (currentMission == 1)
-            {
-                currentMission++;
-                LogEvent("CurrentMission="+currentMission);
-                target1.SetActive(false);
-                if (giveGradualRewardForEachSphere)
-                {
-                    AddReward(1 / 3f);
-                }
-            }
-            else
-            {
-                EndLogEvent(false);
-                Done();
-            }
+            Goal1Achieved();
             return;
         }
         //Target2 fell off
         if (target2.activeSelf && target2.transform.position.y + 1 < tankArena.transform.position.y)
         {
-            LogEvent("Target2_fell");
-            if (currentMission == 2)
-            {
-                currentMission++;
-                LogEvent("CurrentMission=" + currentMission);
-                target2.SetActive(false);
-                if (giveGradualRewardForEachSphere)
-                {
-                    AddReward(1 / 3f);
-                }
-            }
-            else
-            {
-                EndLogEvent(false);
-                Done();
-            }
+            Goal2Achieved();
             return;
         }
         //Target3 fell off
         if (target3.activeSelf && target3.transform.position.y + 1 < tankArena.transform.position.y)
         {
-            LogEvent("Target3_fell");
-            if (currentMission == 3)
-            {
-                target3.SetActive(false);
-                if (giveGradualRewardForEachSphere)
-                {
-                    AddReward(1 / 3f);
-                }
-                else
-                {
-                    AddReward(1);
-                }
-                EndLogEvent(true);
-                Done();
-            }
-            else
-            {
-                EndLogEvent(false);
-                Done();
-            }
+            Goal3Achieved();
             return;
         }
 
@@ -352,20 +358,23 @@ public class RollerAgent : Agent
 
     void OnCollisionEnter(Collision collision)
     {
-        GameObject otherGameObject = collision.gameObject;
-        if(otherGameObject == target1)
+        if (!rewardOnTouch)
         {
-            LogEvent("CollideWithTarget1");
             return;
         }
-        else if(otherGameObject == target2)
+        GameObject otherGameObject = collision.gameObject;
+        
+        if(otherGameObject == target1)
         {
-            LogEvent("CollideWithTarget2");
-            return;
-        }else if(otherGameObject == target3)
+            Goal1Achieved();
+        }
+        if(otherGameObject == target2)
         {
-            LogEvent("CollideWithTarget3");
-            return;
+            Goal2Achieved();
+        }
+        if (otherGameObject == target3)
+        {
+            Goal3Achieved();
         }
     }
 
