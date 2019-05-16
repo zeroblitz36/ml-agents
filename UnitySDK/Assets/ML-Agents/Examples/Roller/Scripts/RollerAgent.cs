@@ -19,7 +19,8 @@ public class RollerAgent : Agent
 
     private const bool giveGradualRewardForEachSphere = true;
     private const bool eachMissionIsItsOwnBoolean = false;
-    private const bool rewardOnTouch = true;
+    private const bool rewardOnTouch = false;
+    private int numberOfTargets = 2;
     /*
      * If currentMission is
      * 1 : drop off target1
@@ -32,6 +33,13 @@ public class RollerAgent : Agent
 
     public override void InitializeAgent()
     {
+        if(numberOfTargets < 1)
+        {
+            numberOfTargets = 1;
+        }else if(numberOfTargets > 3)
+        {
+            numberOfTargets = 3;
+        }
         base.InitializeAgent();
         rBody = GetComponent<Rigidbody>();
 
@@ -46,12 +54,20 @@ public class RollerAgent : Agent
     {
         if (currentMission == 1)
         {
-            currentMission++;
             target1.SetActive(false);
             if (giveGradualRewardForEachSphere)
             {
-                AddReward(1 / 3f);
+                AddReward(1f / numberOfTargets);
             }
+            if(currentMission == numberOfTargets)
+            {
+                if (!giveGradualRewardForEachSphere)
+                {
+                    AddReward(1);
+                }
+                Done();
+            }
+            currentMission++;
         }
         else
         {
@@ -63,12 +79,20 @@ public class RollerAgent : Agent
     {
         if (currentMission == 2)
         {
-            currentMission++;
             target2.SetActive(false);
             if (giveGradualRewardForEachSphere)
             {
-                AddReward(1 / 3f);
+                AddReward(1f / numberOfTargets);
             }
+            if (currentMission == numberOfTargets)
+            {
+                if (!giveGradualRewardForEachSphere)
+                {
+                    AddReward(1);
+                }
+                Done();
+            }
+            currentMission++;
         }
         else
         {
@@ -83,13 +107,17 @@ public class RollerAgent : Agent
             target3.SetActive(false);
             if (giveGradualRewardForEachSphere)
             {
-                AddReward(1 / 3f);
+                AddReward(1f / numberOfTargets);
             }
-            else
+            if (currentMission == numberOfTargets)
             {
-                AddReward(1);
+                if (!giveGradualRewardForEachSphere)
+                {
+                    AddReward(1);
+                }
+                Done();
             }
-            Done();
+            currentMission++;
         }
         else
         {
@@ -104,19 +132,19 @@ public class RollerAgent : Agent
         rBody.AddForce(controlSignal * speed);
 
         //Target1 fell off
-        if (target1.activeSelf && target1.transform.position.y + 1 < tankArena.transform.position.y)
+        if (target1.activeSelf && numberOfTargets >= 1 && target1.transform.position.y + 1 < tankArena.transform.position.y)
         {
             Goal1Achieved();
             return;
         }
         //Target2 fell off
-        if (target2.activeSelf && target2.transform.position.y + 1 < tankArena.transform.position.y)
+        if (target2.activeSelf && numberOfTargets >= 2 && target2.transform.position.y + 1 < tankArena.transform.position.y)
         {
             Goal2Achieved();
             return;
         }
         //Target3 fell off
-        if (target3.activeSelf && target3.transform.position.y + 1 < tankArena.transform.position.y)
+        if (target3.activeSelf && numberOfTargets >= 3 && target3.transform.position.y + 1 < tankArena.transform.position.y)
         {
             Goal3Achieved();
             return;
@@ -208,6 +236,7 @@ public class RollerAgent : Agent
         AddVectorObs(target1RigidBody.velocity.z);
 
         //Target2
+        if (numberOfTargets < 2) return;
         relativePosition = target2.transform.position - transform.position;
         AddVectorObs(relativePosition.x);
         AddVectorObs(relativePosition.z);
@@ -223,8 +252,9 @@ public class RollerAgent : Agent
 
         AddVectorObs(target2RigidBody.velocity.x);
         AddVectorObs(target2RigidBody.velocity.z);
-
+        
         //Target3
+        if (numberOfTargets < 3) return;
         relativePosition = target3.transform.position - transform.position;
         AddVectorObs(relativePosition.x);
         AddVectorObs(relativePosition.z);
@@ -303,10 +333,10 @@ public class RollerAgent : Agent
         target2RigidBody.angularVelocity = Vector3.zero;
         target3RigidBody.velocity = Vector3.zero;
         target3RigidBody.angularVelocity = Vector3.zero;
-
-        target1.SetActive(true);
-        target2.SetActive(true);
-        target3.SetActive(true);
+        
+        target1.SetActive(numberOfTargets >= 1);
+        target2.SetActive(numberOfTargets >= 2);
+        target3.SetActive(numberOfTargets >= 3);
 
         float spawnHeight = tankArena.transform.position.y + 0.5f;
         float arenaRadius = 4.5f;
@@ -328,6 +358,7 @@ public class RollerAgent : Agent
 
         target1.transform.position = targetPosition;
 
+        if (numberOfTargets < 2) return;
         do
         {
             Vector2 r = Random.insideUnitCircle * arenaRadius;
@@ -341,6 +372,7 @@ public class RollerAgent : Agent
         } while (distanceToAgent < 1.1f || distanceToTarget1 < 1.1f);
         target2.transform.position = targetPosition;
 
+        if (numberOfTargets < 3) return;
         do
         {
             Vector2 r = Random.insideUnitCircle * arenaRadius;

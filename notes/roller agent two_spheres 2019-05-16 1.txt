@@ -1,0 +1,117 @@
+2019-05-16 22:54:14.367636: I T:\src\github\tensorflow\tensorflow\core\platform\cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+INFO:mlagents.envs:Hyperparameters for the PPO Trainer of brain RollerAgentLearningBrain:
+        batch_size:     128
+        beta:   0.01
+        buffer_size:    2048
+        epsilon:        0.2
+        gamma:  0.99
+        hidden_units:   512
+        lambd:  0.95
+        learning_rate:  0.0003
+        max_steps:      5.0e6
+        normalize:      False
+        num_epoch:      3
+        num_layers:     3
+        time_horizon:   128
+        sequence_length:        64
+        summary_freq:   2000
+        use_recurrent:  False
+        summary_path:   ./summaries/test_two_spheres-0_RollerAgentLearningBrain
+        memory_size:    256
+        use_curiosity:  True
+        curiosity_strength:     0.01
+        curiosity_enc_size:     256
+        model_path:     ./models/test_two_spheres/RollerAgentLearningBrain
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 2000. Mean Reward: 0.074. Std of Reward: 0.203. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 4000. Mean Reward: 0.186. Std of Reward: 0.292. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 6000. Mean Reward: 0.286. Std of Reward: 0.322. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 8000. Mean Reward: 0.349. Std of Reward: 0.305. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 10000. Mean Reward: 0.439. Std of Reward: 0.303. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 12000. Mean Reward: 0.508. Std of Reward: 0.273. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 14000. Mean Reward: 0.510. Std of Reward: 0.283. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 16000. Mean Reward: 0.501. Std of Reward: 0.294. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 18000. Mean Reward: 0.564. Std of Reward: 0.298. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 20000. Mean Reward: 0.605. Std of Reward: 0.310. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 22000. Mean Reward: 0.638. Std of Reward: 0.311. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 24000. Mean Reward: 0.660. Std of Reward: 0.306. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 26000. Mean Reward: 0.662. Std of Reward: 0.312. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 28000. Mean Reward: 0.678. Std of Reward: 0.324. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 30000. Mean Reward: 0.671. Std of Reward: 0.321. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 32000. Mean Reward: 0.683. Std of Reward: 0.335. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 34000. Mean Reward: 0.738. Std of Reward: 0.324. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 36000. Mean Reward: 0.724. Std of Reward: 0.339. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 38000. Mean Reward: 0.701. Std of Reward: 0.369. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 40000. Mean Reward: 0.721. Std of Reward: 0.338. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 42000. Mean Reward: 0.700. Std of Reward: 0.345. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 44000. Mean Reward: 0.751. Std of Reward: 0.332. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 46000. Mean Reward: 0.759. Std of Reward: 0.340. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 48000. Mean Reward: 0.761. Std of Reward: 0.347. Training.
+INFO:mlagents.envs:Saved Model
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 50000. Mean Reward: 0.790. Std of Reward: 0.338. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 52000. Mean Reward: 0.797. Std of Reward: 0.362. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 54000. Mean Reward: 0.782. Std of Reward: 0.355. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 56000. Mean Reward: 0.802. Std of Reward: 0.359. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 58000. Mean Reward: 0.855. Std of Reward: 0.310. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 60000. Mean Reward: 0.827. Std of Reward: 0.340. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 62000. Mean Reward: 0.843. Std of Reward: 0.321. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 64000. Mean Reward: 0.837. Std of Reward: 0.330. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 66000. Mean Reward: 0.854. Std of Reward: 0.320. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 68000. Mean Reward: 0.836. Std of Reward: 0.348. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 70000. Mean Reward: 0.842. Std of Reward: 0.334. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 72000. Mean Reward: 0.837. Std of Reward: 0.344. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 74000. Mean Reward: 0.875. Std of Reward: 0.306. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 76000. Mean Reward: 0.863. Std of Reward: 0.325. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 78000. Mean Reward: 0.836. Std of Reward: 0.350. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 80000. Mean Reward: 0.789. Std of Reward: 0.384. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 82000. Mean Reward: 0.661. Std of Reward: 0.410. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 84000. Mean Reward: 0.757. Std of Reward: 0.362. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 86000. Mean Reward: 0.775. Std of Reward: 0.370. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 88000. Mean Reward: 0.782. Std of Reward: 0.378. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 90000. Mean Reward: 0.857. Std of Reward: 0.326. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 92000. Mean Reward: 0.813. Std of Reward: 0.373. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 94000. Mean Reward: 0.839. Std of Reward: 0.351. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 96000. Mean Reward: 0.810. Std of Reward: 0.360. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 98000. Mean Reward: 0.769. Std of Reward: 0.364. Training.
+INFO:mlagents.envs:Saved Model
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 100000. Mean Reward: 0.771. Std of Reward: 0.371. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 102000. Mean Reward: 0.780. Std of Reward: 0.364. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 104000. Mean Reward: 0.848. Std of Reward: 0.310. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 106000. Mean Reward: 0.841. Std of Reward: 0.334. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 108000. Mean Reward: 0.810. Std of Reward: 0.356. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 110000. Mean Reward: 0.825. Std of Reward: 0.334. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 112000. Mean Reward: 0.835. Std of Reward: 0.311. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 114000. Mean Reward: 0.804. Std of Reward: 0.349. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 116000. Mean Reward: 0.832. Std of Reward: 0.336. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 118000. Mean Reward: 0.828. Std of Reward: 0.339. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 120000. Mean Reward: 0.859. Std of Reward: 0.304. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 122000. Mean Reward: 0.844. Std of Reward: 0.334. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 124000. Mean Reward: 0.804. Std of Reward: 0.362. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 126000. Mean Reward: 0.805. Std of Reward: 0.360. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 128000. Mean Reward: 0.823. Std of Reward: 0.338. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 130000. Mean Reward: 0.830. Std of Reward: 0.344. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 132000. Mean Reward: 0.869. Std of Reward: 0.310. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 134000. Mean Reward: 0.893. Std of Reward: 0.294. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 136000. Mean Reward: 0.859. Std of Reward: 0.328. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 138000. Mean Reward: 0.897. Std of Reward: 0.288. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 140000. Mean Reward: 0.815. Std of Reward: 0.340. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 142000. Mean Reward: 0.818. Std of Reward: 0.364. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 144000. Mean Reward: 0.826. Std of Reward: 0.362. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 146000. Mean Reward: 0.865. Std of Reward: 0.326. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 148000. Mean Reward: 0.830. Std of Reward: 0.363. Training.
+INFO:mlagents.envs:Saved Model
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 150000. Mean Reward: 0.865. Std of Reward: 0.326. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 152000. Mean Reward: 0.829. Std of Reward: 0.352. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 154000. Mean Reward: 0.870. Std of Reward: 0.325. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 156000. Mean Reward: 0.856. Std of Reward: 0.337. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 158000. Mean Reward: 0.877. Std of Reward: 0.312. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 160000. Mean Reward: 0.849. Std of Reward: 0.350. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 162000. Mean Reward: 0.863. Std of Reward: 0.330. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 164000. Mean Reward: 0.875. Std of Reward: 0.311. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 166000. Mean Reward: 0.898. Std of Reward: 0.282. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 168000. Mean Reward: 0.910. Std of Reward: 0.278. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 170000. Mean Reward: 0.814. Std of Reward: 0.327. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 172000. Mean Reward: 0.829. Std of Reward: 0.313. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 174000. Mean Reward: 0.836. Std of Reward: 0.320. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 176000. Mean Reward: 0.879. Std of Reward: 0.277. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 178000. Mean Reward: 0.874. Std of Reward: 0.275. Training.
+INFO:mlagents.trainers: test_two_spheres-0: RollerAgentLearningBrain: Step: 180000. Mean Reward: 0.879. Std of Reward: 0.291. Training.
