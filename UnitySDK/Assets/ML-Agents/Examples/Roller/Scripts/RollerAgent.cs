@@ -1,12 +1,11 @@
 ﻿using MLAgents;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class RollerAgent : Agent
 {
     Rigidbody rBody;
-    public TankArena tankArena;
+    public RollerArena tankArena;
     public GameObject target1;
     public GameObject target2;
     public GameObject target3;

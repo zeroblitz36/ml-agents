@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TankArena : MonoBehaviour
+public class RollerArena : MonoBehaviour
 {
     public GameObject rollerAgentPrefab;
     public GameObject target1Prefab;
