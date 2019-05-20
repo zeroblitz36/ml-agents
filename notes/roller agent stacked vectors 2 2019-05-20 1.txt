@@ -2187,3 +2187,4 @@ INFO:mlagents.trainers: test_stacked_vectors_2-0: RollerAgentLearningBrain: Step
 INFO:mlagents.trainers: test_stacked_vectors_2-0: RollerAgentLearningBrain: Step: 4160000. Mean Reward: 0.788. Std of Reward: 0.341. Training.
 INFO:mlagents.trainers: test_stacked_vectors_2-0: RollerAgentLearningBrain: Step: 4162000. Mean Reward: 0.762. Std of Reward: 0.352. Training.
 INFO:mlagents.trainers: test_stacked_vectors_2-0: RollerAgentLearningBrain: Step: 4164000. Mean Reward: 0.729. Std of Reward: 0.371. Training.
+INFO:mlagents.trainers: test_stacked_vectors_2-0: RollerAgentLearningBrain: Step: 4166000. Mean Reward: 0.786. Std of Reward: 0.341. Training.
