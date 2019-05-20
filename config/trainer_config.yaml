@@ -287,5 +287,20 @@ RollerAgentLearningBrain:
     hidden_units: 512
     num_layers: 3
     beta: 1.0e-2
-    max_steps: 5.0e5
+    max_steps: 5.0e6
     num_epoch: 3
+
+RollerAgentCameraLearningBrain:
+    use_curiosity: true
+    summary_freq: 2000
+    curiosity_strength: 0.01
+    curiosity_enc_size: 256
+    time_horizon: 128
+    batch_size: 128
+    buffer_size: 2048
+    hidden_units: 512
+    num_layers: 6
+    beta: 1.0e-2
+    max_steps: 5.0e6
+    num_epoch: 3
+ 
