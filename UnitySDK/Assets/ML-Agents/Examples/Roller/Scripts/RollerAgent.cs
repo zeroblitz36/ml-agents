@@ -20,7 +20,7 @@ public class RollerAgent : Agent
     private const bool giveGradualRewardForEachSphere = true;
     private const bool eachMissionIsItsOwnBoolean = false;
     private const bool rewardOnTouch = false;
-    private int numberOfTargets = 2;
+    private int numberOfTargets = 3;
     /*
      * If currentMission is
      * 1 : drop off target1
