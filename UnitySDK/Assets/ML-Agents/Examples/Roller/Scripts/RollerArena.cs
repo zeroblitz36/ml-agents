@@ -18,9 +18,9 @@ public class RollerArena : MonoBehaviour
         rollerAgentObject = Instantiate(rollerAgentPrefab,
             new Vector3(0, transform.position.y + 0.5f, 0),
             Quaternion.identity);
-        rollerAgent = rollerAgentObject.GetComponent<RollerAgent>();
-        rollerAgent.tankArena = this;
 
+        rollerAgent = rollerAgentObject.GetComponent<RollerAgent>();
+        rollerAgent.arenaPosition = transform.position;
         target1Object = Instantiate(target1Prefab);
         target2Object = Instantiate(target2Prefab);
         target3Object = Instantiate(target3Prefab);

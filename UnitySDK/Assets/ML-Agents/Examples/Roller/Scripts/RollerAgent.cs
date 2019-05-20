@@ -5,7 +5,7 @@ using UnityEngine;
 public class RollerAgent : Agent
 {
     Rigidbody rBody;
-    public RollerArena tankArena;
+    public Vector3 arenaPosition;
     public GameObject target1;
     public GameObject target2;
     public GameObject target3;
@@ -131,26 +131,26 @@ public class RollerAgent : Agent
         rBody.AddForce(controlSignal * speed);
 
         //Target1 fell off
-        if (target1.activeSelf && numberOfTargets >= 1 && target1.transform.position.y + 1 < tankArena.transform.position.y)
+        if (target1.activeSelf && numberOfTargets >= 1 && target1.transform.position.y + 1 < arenaPosition.y)
         {
             Goal1Achieved();
             return;
         }
         //Target2 fell off
-        if (target2.activeSelf && numberOfTargets >= 2 && target2.transform.position.y + 1 < tankArena.transform.position.y)
+        if (target2.activeSelf && numberOfTargets >= 2 && target2.transform.position.y + 1 < arenaPosition.y)
         {
             Goal2Achieved();
             return;
         }
         //Target3 fell off
-        if (target3.activeSelf && numberOfTargets >= 3 && target3.transform.position.y + 1 < tankArena.transform.position.y)
+        if (target3.activeSelf && numberOfTargets >= 3 && target3.transform.position.y + 1 < arenaPosition.y)
         {
             Goal3Achieved();
             return;
         }
 
         //Agent fell off platform
-        if (transform.position.y < tankArena.transform.position.y + 0.45f)
+        if (transform.position.y < arenaPosition.y + 0.45f)
         {
             //SetReward(-1);
             EndLogEvent(false);
@@ -176,11 +176,11 @@ public class RollerAgent : Agent
             target3RigidBody = target3.GetComponent<Rigidbody>();
         }
 
-        if (transform.position.y < tankArena.transform.position.y + 0.45f)
+        if (transform.position.y < arenaPosition.y + 0.45f)
         {
             rBody.angularVelocity = Vector3.zero;
             rBody.velocity = Vector3.zero;
-            transform.position = new Vector3(0, tankArena.transform.position.y + 0.5f, 0);
+            transform.position = new Vector3(0, arenaPosition.y + 0.5f, 0);
         }
 
         currentMission = 1;
@@ -192,12 +192,17 @@ public class RollerAgent : Agent
 
     public override void CollectObservations()
     {
+        if(agentParameters.agentCameras.Count > 0)
+        {
+            return;
+        }
+
         AddVectorObs(transform.position.x);
         AddVectorObs(transform.position.z);
 
         float distanceFromCenter = Vector3.Distance(
                 transform.position,
-                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+                new Vector3(0, arenaPosition.y + 0.5f, 0)
             );
         AddVectorObs(distanceFromCenter);
 
@@ -227,7 +232,7 @@ public class RollerAgent : Agent
 
         float targetDistanceFromCenter = Vector3.Distance(
                 target1.transform.position,
-                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+                new Vector3(0, arenaPosition.y + 0.5f, 0)
             );
         AddVectorObs(targetDistanceFromCenter);
 
@@ -245,7 +250,7 @@ public class RollerAgent : Agent
 
         targetDistanceFromCenter = Vector3.Distance(
                 target2.transform.position,
-                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+                new Vector3(0, arenaPosition.y + 0.5f, 0)
             );
         AddVectorObs(targetDistanceFromCenter);
 
@@ -263,7 +268,7 @@ public class RollerAgent : Agent
 
         targetDistanceFromCenter = Vector3.Distance(
                 target3.transform.position,
-                new Vector3(0, tankArena.transform.position.y + 0.5f, 0)
+                new Vector3(0, arenaPosition.y + 0.5f, 0)
             );
         AddVectorObs(targetDistanceFromCenter);
 
@@ -337,7 +342,7 @@ public class RollerAgent : Agent
         target2.SetActive(numberOfTargets >= 2);
         target3.SetActive(numberOfTargets >= 3);
 
-        float spawnHeight = tankArena.transform.position.y + 0.5f;
+        float spawnHeight = arenaPosition.y + 0.5f;
         float arenaRadius = 4.5f;
 
         Vector3 targetPosition;
