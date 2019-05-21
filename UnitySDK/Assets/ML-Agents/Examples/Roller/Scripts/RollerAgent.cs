@@ -244,60 +244,7 @@ public class RollerAgent : Agent
         AddVectorObs(target3RigidBody.velocity.x);
         AddVectorObs(target3RigidBody.velocity.z);
     }
-
-    List<float> perceptionBuffer = new List<float>();
-    Vector3 endPosition;
-    RaycastHit hit;
-
-    public List<float> Perceive(float rayDistance,
-            float[] rayAngles, int layerMask)
-    {
-        perceptionBuffer.Clear();
-        // For each ray sublist stores categorial information on detected object
-        // along with object distance.
-        foreach (float angle in rayAngles)
-        {
-            Vector3 v = new Vector3(
-                Mathf.Cos(DegreeToRadian(angle)),
-                0,
-                Mathf.Sin(DegreeToRadian(angle))
-            );
-            Debug.Log("angle = " + angle + " v = " + v);
-            endPosition = transform.position + v * rayDistance;
-            
-            if(Physics.Linecast(transform.position, endPosition, out hit, layerMask))
-            {
-                perceptionBuffer.Add(hit.distance / rayDistance);
-            }
-            else
-            {
-                perceptionBuffer.Add(1);
-            }
-
-            if (Application.isEditor)
-            {
-                Debug.DrawRay(transform.position,
-                    Vector3.Lerp(Vector3.zero,v * rayDistance, perceptionBuffer[perceptionBuffer.Count-1]),
-                    Color.black, 
-                    0.01f, true);
-            }
-        }
-
-        return perceptionBuffer;
-    }
-
-    public static Vector3 PolarToCartesian(float radius, float angle)
-    {
-        float x = radius * Mathf.Cos(DegreeToRadian(angle));
-        float z = radius * Mathf.Sin(DegreeToRadian(angle));
-        return new Vector3(x, 0f, z);
-    }
-
-    public static float DegreeToRadian(float degree)
-    {
-        return degree * Mathf.PI / 180f;
-    }
-
+    
     private void ResetAllTargets()
     {
         target1RigidBody.velocity = Vector3.zero;
