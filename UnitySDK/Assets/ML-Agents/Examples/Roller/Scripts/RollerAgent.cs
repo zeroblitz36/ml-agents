@@ -14,8 +14,6 @@ public class RollerAgent : Agent
     private Rigidbody target3RigidBody;
     public float speed;
 
-    BrainEventManager brainEventManager = null;
-
     private const bool giveGradualRewardForEachSphere = true;
     private const bool eachMissionIsItsOwnBoolean = false;
     private const bool rewardOnTouch = false;
@@ -28,8 +26,6 @@ public class RollerAgent : Agent
      */
     private int currentMission = 1;
 
-    private static int atomicCounter = 0;
-
     public override void InitializeAgent()
     {
         if(numberOfTargets < 1)
@@ -41,12 +37,6 @@ public class RollerAgent : Agent
         }
         base.InitializeAgent();
         rBody = GetComponent<Rigidbody>();
-
-        if(brain is PlayerBrain)
-        {
-            //int c = Interlocked.Increment(ref atomicCounter);
-            //brainEventManager = new BrainEventManager("BrainEventChain_"+c);
-        }
     }
 
     private void Goal1Achieved()
@@ -125,40 +115,21 @@ public class RollerAgent : Agent
     }
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        Vector3 controlSignal = Vector3.zero;
-        controlSignal.x = vectorAction[0];
-        controlSignal.z = vectorAction[1];
+        Vector3 controlSignal = new Vector3(vectorAction[0], 0, vectorAction[1]);
         rBody.AddForce(controlSignal * speed);
 
-        //Target1 fell off
-        if (target1.activeSelf && numberOfTargets >= 1 && target1.transform.position.y + 1 < arenaPosition.y)
-        {
-            Goal1Achieved();
-            return;
+        if (target1.activeSelf && numberOfTargets >= 1 && target1.transform.position.y + 1 < arenaPosition.y){
+            Goal1Achieved();return;
         }
-        //Target2 fell off
-        if (target2.activeSelf && numberOfTargets >= 2 && target2.transform.position.y + 1 < arenaPosition.y)
-        {
-            Goal2Achieved();
-            return;
+        if (target2.activeSelf && numberOfTargets >= 2 && target2.transform.position.y + 1 < arenaPosition.y){
+            Goal2Achieved();return;
         }
-        //Target3 fell off
-        if (target3.activeSelf && numberOfTargets >= 3 && target3.transform.position.y + 1 < arenaPosition.y)
-        {
-            Goal3Achieved();
-            return;
+        if (target3.activeSelf && numberOfTargets >= 3 && target3.transform.position.y + 1 < arenaPosition.y){
+            Goal3Achieved();return;
         }
-
-        //Agent fell off platform
-        if (transform.position.y < arenaPosition.y + 0.45f)
-        {
-            //SetReward(-1);
-            EndLogEvent(false);
+        if (transform.position.y < arenaPosition.y + 0.45f){
             Done();
-            return;
         }
-
-        //AddReward(-1f / agentParameters.maxStep);
     }
 
     public override void AgentReset()
@@ -186,8 +157,6 @@ public class RollerAgent : Agent
         currentMission = 1;
 
         ResetAllTargets();
-
-        StartLogEvent();
     }
 
     public override void CollectObservations()
@@ -346,17 +315,14 @@ public class RollerAgent : Agent
         float arenaRadius = 4.5f;
 
         Vector3 targetPosition;
+        Vector2 r;
         float distanceToAgent;
         float distanceToTarget1;
         float distanceToTarget2;
         do
         {
-            Vector2 r = Random.insideUnitCircle * arenaRadius;
-            targetPosition = new Vector3(
-                r.x,
-                spawnHeight,
-                r.y
-            );
+            r = Random.insideUnitCircle * arenaRadius;
+            targetPosition = new Vector3(r.x, spawnHeight, r.y);
             distanceToAgent = Vector3.Distance(transform.position, targetPosition);
         } while (distanceToAgent < 1.1f);
 
@@ -365,12 +331,8 @@ public class RollerAgent : Agent
         if (numberOfTargets < 2) return;
         do
         {
-            Vector2 r = Random.insideUnitCircle * arenaRadius;
-            targetPosition = new Vector3(
-                r.x,
-                spawnHeight,
-                r.y
-            );
+            r = Random.insideUnitCircle * arenaRadius;
+            targetPosition = new Vector3(r.x, spawnHeight, r.y);
             distanceToAgent = Vector3.Distance(transform.position, targetPosition);
             distanceToTarget1 = Vector3.Distance(target1.transform.position, targetPosition);
         } while (distanceToAgent < 1.1f || distanceToTarget1 < 1.1f);
@@ -379,12 +341,8 @@ public class RollerAgent : Agent
         if (numberOfTargets < 3) return;
         do
         {
-            Vector2 r = Random.insideUnitCircle * arenaRadius;
-            targetPosition = new Vector3(
-                r.x,
-                spawnHeight,
-                r.y
-            );
+            r = Random.insideUnitCircle * arenaRadius;
+            targetPosition = new Vector3(r.x, spawnHeight, r.y);
             distanceToAgent = Vector3.Distance(transform.position, targetPosition);
             distanceToTarget1 = Vector3.Distance(target1.transform.position, targetPosition);
             distanceToTarget2 = Vector3.Distance(target2.transform.position, targetPosition);
@@ -411,42 +369,6 @@ public class RollerAgent : Agent
         if (otherGameObject == target3)
         {
             Goal3Achieved();
-        }
-    }
-
-    private void StartLogEvent()
-    {
-        if (brainEventManager == null)
-        {
-            return;
-        }
-        
-        brainEventManager.StartRecordingNewEvents();
-    }
-
-    private void LogEvent(string s)
-    {
-        if(brainEventManager == null)
-        {
-            return;
-        }
-
-        brainEventManager.RecordEvent(s);
-    }
-
-    private void EndLogEvent(bool successfull)
-    {
-        if (brainEventManager == null)
-        {
-            return;
-        }
-        if (successfull)
-        {
-            brainEventManager.RecordGoalSucces();
-        }
-        else
-        {
-            brainEventManager.RecordGoalFailed();
         }
     }
 }
