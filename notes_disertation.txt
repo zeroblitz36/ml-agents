@@ -1,0 +1,6 @@
+State of the art moved before Implementation
+Discovered observations => Evaluations and personal observations
+Try to do Curriculum Learning
+Delete Inverse Reinforcement Learning
+Deep Reinforcement Learning forumulas and some explanations
+Summarize into a table the behaviours of the agents using things such as chaoatis/cautious movement, awareness etc
