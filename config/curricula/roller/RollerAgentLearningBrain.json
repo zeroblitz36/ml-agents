@@ -1,0 +1,9 @@
+{
+  "measure": "reward",
+  "thresholds": [0.8, 0.9],
+  "min_lesson_length": 2000,
+  "signal_smoothing": true,
+  "parameters": {
+    "sphere_count": [ 1, 2, 3]
+  }
+}

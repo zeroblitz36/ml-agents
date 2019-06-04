@@ -14,10 +14,14 @@ public class RollerAgent : Agent
     private Rigidbody target3RigidBody;
     public float speed;
 
+    private RollerArenaAcademy academy;
+
     private const bool giveGradualRewardForEachSphere = true;
     private const bool eachMissionIsItsOwnBoolean = false;
     private const bool rewardOnTouch = false;
     private int numberOfTargets = 3;
+    private bool m_UseCurriculumLearning = true;
+
     /*
      * If currentMission is
      * 1 : drop off target1
@@ -28,7 +32,8 @@ public class RollerAgent : Agent
 
     public override void InitializeAgent()
     {
-        if(numberOfTargets < 1)
+        academy = FindObjectOfType<RollerArenaAcademy>();
+        if (numberOfTargets < 1)
         {
             numberOfTargets = 1;
         }else if(numberOfTargets > 3)
@@ -133,7 +138,11 @@ public class RollerAgent : Agent
     }
 
     public override void AgentReset()
-    { 
+    {
+        if (m_UseCurriculumLearning)
+        {
+            numberOfTargets = (int)(academy.resetParameters["sphere_count"]);
+        }
         if (!target1RigidBody)
         {
             target1RigidBody = target1.GetComponent<Rigidbody>();
@@ -209,7 +218,7 @@ public class RollerAgent : Agent
         AddVectorObs(target1RigidBody.velocity.z);
 
         //Target2
-        if (numberOfTargets < 2) return;
+        if (numberOfTargets < 2 && !m_UseCurriculumLearning) return;
         relativePosition = target2.transform.position - transform.position;
         AddVectorObs(relativePosition.x);
         AddVectorObs(relativePosition.z);
@@ -227,7 +236,7 @@ public class RollerAgent : Agent
         AddVectorObs(target2RigidBody.velocity.z);
         
         //Target3
-        if (numberOfTargets < 3) return;
+        if (numberOfTargets < 3 && !m_UseCurriculumLearning) return;
         relativePosition = target3.transform.position - transform.position;
         AddVectorObs(relativePosition.x);
         AddVectorObs(relativePosition.z);
