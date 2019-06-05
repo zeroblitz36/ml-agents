@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: RollerAgentLearningBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 24
-    numStackedVectorObservations: 2
+    vectorObservationSize: 18
+    numStackedVectorObservations: 1
     vectorActionSize: 02000000
     cameraResolutions: []
     vectorActionDescriptions:
     - 
     - 
     vectorActionSpaceType: 1
-  model: {fileID: -1849444497803769924, guid: fc9fda091350e624ba6a1e9ae29aa250, type: 3}
+  model: {fileID: -6311263336161051770, guid: 6b6bf4cdcf3d0ff4d9a00a4c694ea49c, type: 3}
   inferenceDevice: 0
